@@ -1,13 +1,16 @@
 import React from 'react'
 import Title from './Title'
 import ProfilCard from './ProfilCard'
+import BiodataCard from './BiodataCard'
 
 const DetailKonselorPage = () => {
     return (
         <>
             <Title />
-            <ProfilCard />
-            
+            <div className='flex justify-center'>
+                <ProfilCard />
+                <BiodataCard />
+            </div>
         </>
     )
 }
