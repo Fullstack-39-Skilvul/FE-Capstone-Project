@@ -7,7 +7,7 @@ const DetailKonselorPage = () => {
     return (
         <>
             <Title />
-            <div className='flex justify-center'>
+            <div className='flex flex-wrap justify-center'>
                 <ProfilCard />
                 <BiodataCard />
             </div>
