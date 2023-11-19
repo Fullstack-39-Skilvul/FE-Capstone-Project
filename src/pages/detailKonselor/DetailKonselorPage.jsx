@@ -1,12 +1,13 @@
 import React from 'react'
 import Title from './Title'
-import CardKonselor from './CardKonselor'
+import ProfilCard from './ProfilCard'
 
 const DetailKonselorPage = () => {
     return (
         <>
             <Title />
-            <CardKonselor />
+            <ProfilCard />
+            
         </>
     )
 }
