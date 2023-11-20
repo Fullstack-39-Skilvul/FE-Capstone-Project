@@ -19,7 +19,7 @@ function About() {
           apa yang membuat Mahasucita unik :
         </p>
       </div>
-      <div className=" mt-16">
+      <div className="mt-10">
         <div className="flex flex-wrap justify-between items-center gap-4 md:gap-0">
           {DATA_ABOUT.map((item) => (
             <div

@@ -24,7 +24,7 @@ function Hero() {
         </div>
         <div className="mx-auto mt-10 pt-10 md:pt-0 max-[100%]: items-center">
           <img
-            src="/public/assets/img/cuate.svg"
+            src="/public/assets/img/cuate1.svg"
             alt="Ilustrator"
             width={800}
           />
