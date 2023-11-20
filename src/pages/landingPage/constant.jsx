@@ -1,4 +1,14 @@
-import { Brain, HeartBreak, UsersFour } from "phosphor-react";
+import {
+  Barbell,
+  Brain,
+  DotsThreeCircle,
+  GraduationCap,
+  HeartBreak,
+  HouseLine,
+  Person,
+  Smiley,
+  UsersFour,
+} from "phosphor-react";
 
 export const DATA_ABOUT = [
   {
@@ -24,5 +34,48 @@ export const DATA_ABOUT = [
     judul2: "Pengguna",
     deskripsi:
       "Kami memahami bahwa waktu dan jarak bisa menjadi hambatan dalam mencari bantuan. Oleh karena itu, kami menyediakan layanan konseling online yang nyaman, sehingga Anda dapat mengakses bantuan kapan saja dan di mana saja.",
+  },
+];
+
+export const DATA_SPESIALIS = [
+  {
+    id: 1,
+    icon: <Smiley width={25} />,
+    spesialis: "Emotion",
+  },
+  {
+    id: 2,
+    icon: <Barbell width={25} />,
+    spesialis: "Pekerjaan",
+  },
+  {
+    id: 3,
+    icon: <HouseLine width={25} />,
+    spesialis: "Keluarga",
+  },
+  {
+    id: 4,
+    icon: <GraduationCap width={25} />,
+    spesialis: "Pendidikan",
+  },
+  {
+    id: 5,
+    icon: <HeartBreak width={25} />,
+    spesialis: "Love",
+  },
+  {
+    id: 6,
+    icon: <Person width={25} />,
+    spesialis: "Sosial",
+  },
+  {
+    id: 7,
+    icon: <Brain width={25} />,
+    spesialis: "Mental",
+  },
+  {
+    id: 8,
+    icon: <DotsThreeCircle width={25} />,
+    spesialis: "Lainnya",
   },
 ];

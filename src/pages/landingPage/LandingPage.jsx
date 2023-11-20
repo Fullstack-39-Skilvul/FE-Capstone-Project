@@ -2,6 +2,7 @@ import React from "react";
 import Hero from "./Hero";
 import About from "./About";
 import TryKonseling from "./TryKonseling";
+import Konselor from "./Konselor";
 
 function LandingPage() {
   return (
@@ -9,6 +10,7 @@ function LandingPage() {
       <Hero />
       <About />
       <TryKonseling />
+      <Konselor />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 function TryKonseling() {
   return (
-    <div className="mx-5 md:mx-20 md:gap-10 p-10 rounded-xl text-white bg-sky-500 text-center md:flex">
+    <div className="mt-10 md:mt-0 mx-5 md:mx-20 md:gap-10 p-10 rounded-xl text-white bg-sky-500 text-center md:flex">
       <div className="md:w-[1800px]">
         <img
           src="/public/assets/img/cuate.svg"
