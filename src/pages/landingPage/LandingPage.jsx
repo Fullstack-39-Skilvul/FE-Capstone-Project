@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import About from "./About";
 import TryKonseling from "./TryKonseling";
 import Konselor from "./Konselor";
+import Media from "./Media";
 
 function LandingPage() {
   return (
@@ -11,6 +12,7 @@ function LandingPage() {
       <About />
       <TryKonseling />
       <Konselor />
+      <Media />
     </div>
   );
 }
