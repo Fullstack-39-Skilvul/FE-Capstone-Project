@@ -12,7 +12,7 @@ import React from "react";
 
 function Media() {
   return (
-    <div className="mx-10">
+    <div className="mx-10 text-stone-600">
       <div>
         <div className="text-2xl mt-20 md:text-4xl text-center font-bold text-blue-950">
           Pilih Media
@@ -34,7 +34,7 @@ function Media() {
             <div>Lokasi : Bandung | Jakarta</div>
           </div>
           <div className="mt-5">
-            <ul className="gap-3 flex flex-col text-base">
+            <ul className="gap-3 flex flex-col text-sm ">
               <li className="flex items-center gap-3">
                 <Armchair size={30} color="#2993D5" /> Ruangan konseling yang
                 nyaman
@@ -73,7 +73,7 @@ function Media() {
             <div>Via : Whatsapp | Google Meet</div>
           </div>
           <div className="mt-5">
-            <ul className="gap-3 flex flex-col text-base">
+            <ul className="gap-3 flex flex-col text-sm">
               <li className="flex items-center gap-3">
                 <Coins size={30} color="#2993D5" /> Biaya lebih terjangkau
               </li>

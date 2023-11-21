@@ -1,4 +1,6 @@
 import React from "react";
+import cuateImage from "../../assets/img/cuate1.svg";
+import { IMAGES } from "../../assets/constant";
 
 function Hero() {
   return (
@@ -13,7 +15,7 @@ function Hero() {
               <span className="text-yellow-400"> Dimulai Di Sini</span>
             </p>
           </div>
-          <p className=" font-extralight text-sm mt-3 max-w-lg">
+          <p className="font-light text-sm mt-3 max-w-lg">
             Tentukan langkah pertama menuju kesejahteraan mental Anda. Segera
             hubungi kami untuk mendapatkan panduan dan dukungan yang Anda
             butuhkan.
@@ -23,11 +25,7 @@ function Hero() {
           </button>
         </div>
         <div className="mx-auto mt-10 pt-10 md:pt-0 max-[100%]: items-center">
-          <img
-            src="/public/assets/img/cuate1.svg"
-            alt="Ilustrator"
-            width={800}
-          />
+          <img src={IMAGES.imgHero} alt="Ilustrator" width={900} />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { IMAGES } from "../../assets/constant";
 
 function Navbar() {
   return (
@@ -7,7 +8,7 @@ function Navbar() {
       <div className="flex items-center gap-10">
         <div>
           <img
-            src="../../../public/assets/img/Manahsucita.png"
+            src={IMAGES.logoManahsucita}
             alt="logo manahsucita"
             width={200}
           />
@@ -23,7 +24,7 @@ function Navbar() {
       </div>
       <div>
         <NavLink>
-          <button className="bg-sky-500 text-white px-3 py-1 rounded-xl ">
+          <button className="bg-sky-500 text-white px-3 py-2 rounded-xl text-sm">
             Jadwalkan Konsultasi
           </button>
         </NavLink>
