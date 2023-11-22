@@ -3,7 +3,7 @@ import React from 'react'
 const Spesifikasi = () => {
     return (
         <>
-            <div className='flex justify-center flex-wrap my-4 gap-2 mx-3'>
+            <div className='flex justify-center flex-wrap my-2 gap-2 mx-3'>
                 <div className='flex' >
                     <p className='rounded-2xl p-1 px-2 text-white font-bold text-sm' style={{ background: '#4898FF' }}>Konflik</p>
                 </div>
