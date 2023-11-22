@@ -1,8 +1,16 @@
 import React from 'react'
+import Card from './Cart'
+import Detail from './Detail'
 
 const PenjadwalanPage = () => {
   return (
-    <div>PenjadwalanPage</div>
+    <>
+      <div className='flex justify-center'>
+        <Detail />
+        <Card />
+      </div>
+
+    </>
   )
 }
 
