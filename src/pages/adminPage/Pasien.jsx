@@ -1,4 +1,5 @@
 import { Button, Modal } from "flowbite-react";
+import { FileSearch } from "phosphor-react";
 import React from "react";
 import { useState } from "react";
 
@@ -10,11 +11,9 @@ function Pasien() {
       <div className="text-sky-500 font-semibold text-2xl">Data Pasien</div>
       <div>
         <div className="flex justify-between items-center mt-5">
-          <button className="shadow border bg-blue-500 p-2 rounded text-white text-xs">
-            + Tambah Data
-          </button>
+          <div></div>
           <input
-            className="border h-8 rounded"
+            className="border h-8 rounded text-sm"
             type="search"
             placeholder="Cari"
           />
@@ -55,13 +54,13 @@ function Pasien() {
                   <a
                     onClick={() => setOpenModal(true)}
                     href="#"
-                    className="font-medium bg-yellow-300 text-blue-950 py-1 px-2 rounded-lg"
+                    className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
                   >
                     Update
                   </a>
                   <a
                     href="#"
-                    className="font-medium bg-red-500 text-white py-1 px-2 rounded-lg"
+                    className="font-medium bg-red-400 text-white py-1 px-2 rounded-lg"
                   >
                     Delete
                   </a>

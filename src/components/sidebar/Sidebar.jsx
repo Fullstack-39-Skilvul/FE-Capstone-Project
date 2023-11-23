@@ -1,6 +1,14 @@
-import { Gauge, HardDrive, SignOut, Syringe, User } from "phosphor-react";
+import {
+  Bandaids,
+  Gauge,
+  HardDrive,
+  SignOut,
+  Syringe,
+  User,
+} from "phosphor-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { DATA_MENU } from "./constant";
 
 function Sidebar() {
   return (
@@ -13,25 +21,13 @@ function Sidebar() {
       </div>
       <div className="pl-3">
         <ul className="gap-4 flex flex-col">
-          <NavLink to="/admin">
-            <li className="flex items-center gap-2">
-              <Gauge /> Dashboard
-            </li>
-          </NavLink>
-          <NavLink to="/admin/pasien">
-            <li className="flex items-center gap-2">
-              <User /> Data Pasien
-            </li>
-          </NavLink>
-          <li className="flex items-center gap-2">
-            <Syringe /> Data Konselor
-          </li>
-          <li className="flex items-center gap-2">
-            <HardDrive /> Data Booking
-          </li>
-          <li className="flex items-center gap-2">
-            <SignOut /> Logout
-          </li>
+          {DATA_MENU.map((item) => (
+            <NavLink to={item.link}>
+              <li className="flex items-center gap-2 hover:bg-sky-400 hover:text-white py-1 rounded pl-2  mr-2">
+                {item.icon} {item.menu}
+              </li>
+            </NavLink>
+          ))}
         </ul>
       </div>
     </div>
