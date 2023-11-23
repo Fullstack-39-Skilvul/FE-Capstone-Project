@@ -1,7 +1,7 @@
 import React from 'react'
 import Title from './Title'
-import ProfilCard from './ProfilCard'
-import BiodataCard from './BiodataCard'
+import ProfilCard from './Components/ProfilCard'
+import BiodataCard from './Components/BiodataCard'
 
 const DetailKonselorPage = () => {
     return (
