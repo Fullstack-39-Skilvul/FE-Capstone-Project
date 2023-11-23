@@ -1,18 +1,16 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "../pages/landingPage/LandingPage";
-import Navbar from "../components/navbar/Navbar";
-import Footer from "../components/footer/Footer";
+import LandingPageLayout from "./layout/LandingPageLayout";
+import AdminPageLayout from "./layout/AdminPageLayout";
 
 function RouterManagement() {
   return (
     <div>
       <Suspense>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPageLayout />} />
+          <Route path="/admin/*" element={<AdminPageLayout />} />
         </Routes>
-        <Footer />
       </Suspense>
     </div>
   );
