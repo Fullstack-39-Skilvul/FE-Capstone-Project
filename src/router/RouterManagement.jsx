@@ -8,7 +8,7 @@ function RouterManagement() {
     <div>
       <Suspense>
         <Routes>
-          <Route path="/" element={<LandingPageLayout />} />
+          <Route path="/*" element={<LandingPageLayout />} />
           <Route path="/admin/*" element={<AdminPageLayout />} />
         </Routes>
       </Suspense>
