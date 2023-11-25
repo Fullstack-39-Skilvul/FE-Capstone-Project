@@ -43,26 +43,26 @@ const JamKonseling = () => {
                     </button>
 
                     {isOpen && (
-                        <div className="absolute right-0 z-10 w-40 mt-4 origin-top-right bg-white border border-gray-100 rounded-md shadow-lg">
-                            <div className="flex flex-wrap p-2 justify-center">
+                        <div className="absolute right-6 mt-0.5 z-10 w-40 origin-top-right rounded-md shadow-lg">
+                            <div className="flex flex-wrap justify-center ">
                                 <button
                                     type="button"
                                     onClick={() => handleTimeSelection('08.00 - 08.45')}
-                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg hover:bg-gray-50 hover:text-gray-700"
+                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg w-full bg-white hover:bg-gray-100 hover:text-gray-700 border border-[#4898FF]"
                                 >
                                     08.00 - 08.45
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => handleTimeSelection('09.00 - 09.45')}
-                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg hover:bg-gray-50 hover:text-gray-700"
+                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg w-full bg-white hover:bg-gray-100 hover:text-gray-700 border border-[#4898FF]"
                                 >
                                     09.00 - 09.45
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => handleTimeSelection('10.00 - 10.45')}
-                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg hover:bg-gray-50 hover:text-gray-700"
+                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg w-full bg-white hover:bg-gray-100 hover:text-gray-700 border border-[#4898FF]"
                                 >
                                     10.00 - 10.45
                                 </button>
