@@ -29,7 +29,7 @@ function navbar() {
 
   return (
     <Navbar fluid rounded theme={customTheme} className='border-b fixed w-full top-0 '>
-      <Navbar.Brand className='md:w-52' >
+      <Navbar.Brand >
         <img
           src={IMAGES.logoManahsucita}
           alt="logo manahsucita"
