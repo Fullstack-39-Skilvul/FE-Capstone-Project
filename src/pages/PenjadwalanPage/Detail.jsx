@@ -21,16 +21,10 @@ const Detail = () => {
                     </div>
                     <div>
                         <div className='flex justify-center flex-wrap md:flex-nowrap md:mx-10 gap-2 mb-3 mt-4 text-[12px] md:text-base sm:gap-2 md:justify-between'>
-                            {/* <Waktu /> */}
-                            {/* <Tanggal /> */}
+                           
                             <MediaSesi />
                         </div>
                     </div>
-                    {/* <div>
-                        <div className='flex justify-center md:mx-40 gap-2 mb-3 mt-3 text-[12px] md:text-base sm:gap-2 md:justify-between'>
-                            <MediaSesi />
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </>

@@ -3,7 +3,7 @@ import React from 'react'
 const Title = () => {
     return (
         <>
-            <header className=' mb-14 sm:text-center max-sm:text-center mt-[120px]'>
+            <header className=' mb-10 sm:text-center max-sm:text-center mt-[120px]'>
                 <div className='flex gap-2 justify-center w-full '>
                     <h1 className='flex my-auto font-bold text-[#0F2650] text-4xl max-sm:text-3xl'>
                         Jadwal

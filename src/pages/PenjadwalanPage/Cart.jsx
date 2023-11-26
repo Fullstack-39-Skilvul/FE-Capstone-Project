@@ -23,7 +23,6 @@ const Card = () => {
                     </div>
                     <div className='flex mx-4 my-3'>
                         <button className='bg-[#42A7FF] hover:bg-blue-600 text-white font-bold text-base rounded-2xl w-full mt-5 py-2'>Checkout</button>
-
                     </div>
                 </div>
             </div>
