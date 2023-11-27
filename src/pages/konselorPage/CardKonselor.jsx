@@ -13,7 +13,7 @@ const CardKonselor = () => {
                     <h1 className="mt-4 mb-2 mx-3 font-bold text-xl">Olivia Davis, Psy.D.</h1>
                     <Spesifikasi />
                     <button className='flex justify-end w-full mt-6'>
-                        <Link className='flex p-2 px-4 bg-[#063D82] hover:bg-blue-700 hover:border-b hover:border-[#063D82] text-white text-sm rounded-2xl' to={'/'}>Booking Now</Link>
+                        <Link className='flex p-2 px-4 bg-[#063D82] hover:bg-blue-700 hover:border-b hover:border-[#063D82] text-white text-sm rounded-2xl' to={'/detailkonselor'}>Booking Now</Link>
                     </button>
                 </div>
             </div>
