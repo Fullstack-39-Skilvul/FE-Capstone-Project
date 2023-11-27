@@ -31,12 +31,12 @@ function LoginPage() {
             />
             <input
               className="h-10 rounded-lg border-none shadow"
-              type="text"
+              type="password"
               placeholder="Password"
             />
-            <button className="w-full py-1 bg-sky-500 rounded-md text-white">
+            <a className="flex justify-center w-full py-1 bg-sky-500 rounded-md text-white" href='/konselor'>
               Login
-            </button>
+            </a>
           </form>
           <div className="mt-10">
             Belum punya akun ?{" "}
