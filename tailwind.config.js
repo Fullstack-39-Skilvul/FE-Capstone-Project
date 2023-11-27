@@ -7,6 +7,7 @@ export default {
     "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
   theme: {
+    darkMode: false, // or 'media' or 'class'
     extend: {},
   },
   plugins: [require("flowbite/plugin")],

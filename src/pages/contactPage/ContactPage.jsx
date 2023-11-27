@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
 import {
   Envelope,
   FacebookLogo,
@@ -14,7 +13,6 @@ import {
 function ContactPage() {
   return (
     <div>
-      <Navbar />
       <div className="lg:mx-52 mx-10">
         <div className="pt-[100px] text-2xl md:text-4xl text-center font-bold text-blue-950">
           Sampaikan Pesan <span className="text-sky-500">Anda</span>
