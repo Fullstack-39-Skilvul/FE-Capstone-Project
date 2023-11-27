@@ -11,7 +11,7 @@ function RouterManagement() {
     <div>
       <Suspense>
         <Routes>
-          <Route path="/" element={<LandingPageLayout />} />
+          <Route path="/*" element={<LandingPageLayout />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
