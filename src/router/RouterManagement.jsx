@@ -1,16 +1,23 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "../pages/landingPage/LandingPage";
-import PenjadwalanPage from "./layout/JadwalPage";
-
+import LandingPageLayout from "./layout/LandingPageLayout";
+import AdminPageLayout from "./layout/AdminPageLayout";
+import ContactPage from "../pages/contactPage/ContactPage";
+import LoginPage from "../pages/loginPage/LoginPage";
+import RegisterPage from "../pages/registerPage/RegisterPage";
+import DetailKonselor from "./layout/DetailPage";
 
 function RouterManagement() {
   return (
     <div>
       <Suspense>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/booking/*" element={<PenjadwalanPage />} />
+          <Route path="/*" element={<LandingPageLayout />} />
+          <Route path="/detailkonselor" element={<DetailKonselor />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/admin/*" element={<AdminPageLayout />} />
         </Routes>
       </Suspense>
     </div>
