@@ -58,4 +58,8 @@ function Footer() {
   );
 }
 
+<<<<<<< HEAD
 export default Footer;
+=======
+export default Footer;
+>>>>>>> dev
