@@ -1,6 +1,26 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
 
 const Spesifikasi = () => {
+    async function getUser() {
+        try {
+            const res = await axios.get('https://nice-gold-indri-sari.cyclic.app/konselors/', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMDY2NzMxfQ.d9ADnKK-sYhF1HvlfzF8mVdGfQPR9xb987m707OD-zM',
+                }
+            });
+            console.log(res.data);
+            // const response = await axios.get('https://nice-gold-indri-sari.cyclic.app/spesialisasis/');
+            // console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        getUser();
+    }
+        , []);
     return (
         <>
             <div className='flex justify-center flex-wrap my-2 gap-2 mx-3'>
