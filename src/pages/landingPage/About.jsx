@@ -4,7 +4,7 @@ import { DATA_ABOUT } from "./constant";
 
 function About() {
   return (
-    <div className=" min-h-[100vh] mx-10 md:mx-28">
+    <div id="about" className=" min-h-[100vh] mx-10 md:mx-28">
       <div className="flex flex-col mt-16 justify-center items-center md:text-center">
         <div className="text-2xl md:text-4xl text-center font-bold text-blue-950">
           Mental Sehat Untuk <br />

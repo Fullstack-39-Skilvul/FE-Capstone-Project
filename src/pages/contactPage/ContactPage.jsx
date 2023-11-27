@@ -9,10 +9,12 @@ import {
   PhoneCall,
   PushPin,
 } from "phosphor-react";
+import NavbarComponent from "../../components/navbar/Navbar";
 
 function ContactPage() {
   return (
-    <div>
+    <div id="contact">
+      <NavbarComponent />
       <div className="lg:mx-52 mx-10">
         <div className="pt-[100px] text-2xl md:text-4xl text-center font-bold text-blue-950">
           Sampaikan Pesan <span className="text-sky-500">Anda</span>

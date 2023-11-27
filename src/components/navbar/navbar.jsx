@@ -1,9 +1,7 @@
-"use client";
-
 import { Button, Navbar } from "flowbite-react";
 import { IMAGES } from "../../assets/constant";
 
-function navbar() {
+function NavbarComponent() {
   const customTheme = {
     link: {
       base: "block py-2 pr-4 pl-3 md:p-0 md:mr-2 sm:mr-3",
@@ -36,23 +34,21 @@ function navbar() {
       <div className="flex md:order-2 ">
         <Button
           type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2  text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Jadwalkan Konsultasi
         </Button>
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link href="#" active>
-          Home
-        </Navbar.Link>
-        <Navbar.Link href="#">About</Navbar.Link>
+        <Navbar.Link href="/">Home</Navbar.Link>
+        <Navbar.Link href="#about">About</Navbar.Link>
         <Navbar.Link href="#">Services</Navbar.Link>
         <Navbar.Link href="#">Pricing</Navbar.Link>
-        <Navbar.Link href="#">Contact</Navbar.Link>
+        <Navbar.Link href="/contact">Contact</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );
 }
 
-export default navbar;
+export default NavbarComponent;
