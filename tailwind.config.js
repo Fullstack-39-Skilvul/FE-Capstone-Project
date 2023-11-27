@@ -1,21 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html", "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
-    'node_modules/flowbite-react/lib/esm/**/*.js'
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/assets/img/**/*.{jpg,png,gif,svg}",
+    "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
   theme: {
     darkMode: false, // or 'media' or 'class'
-    extend: {
-    },
+    extend: {},
   },
-  plugins: [
-    require('flowbite/plugin')
-]
-
-
-
-
-
+  plugins: [require("flowbite/plugin")],
 };
