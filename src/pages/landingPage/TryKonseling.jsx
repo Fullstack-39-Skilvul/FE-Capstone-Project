@@ -1,5 +1,6 @@
 import React from "react";
 import { IMAGES } from "../../assets/constant";
+import { Link } from "react-scroll";
 
 function TryKonseling() {
   return (
@@ -20,9 +21,11 @@ function TryKonseling() {
           Temukan cahaya di sini.
         </div>
         <div>
-          <button className="bg-yellow-400 text-sm text-blue-950 px-6 py-2 rounded-xl mt-7 font-semibold">
-            Jadwalkan Konsultasi
-          </button>
+          <Link to="pricing" smooth={true}>
+            <button className="bg-yellow-300 hover:bg-blue-600 text-sm text-blue-950 px-6 py-2 rounded-xl mt-7 font-semibold">
+              Jadwalkan Konsultasi
+            </button>
+          </Link>
         </div>
       </div>
     </div>
