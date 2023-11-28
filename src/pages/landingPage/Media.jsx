@@ -12,7 +12,7 @@ import React from "react";
 
 function Media() {
   return (
-    <div className="mx-10 text-stone-600">
+    <div id="pricing" className="mx-10 text-stone-600">
       <div>
         <div className="text-2xl mt-20 md:text-4xl text-center font-bold text-blue-950">
           Pilih Media
@@ -58,7 +58,7 @@ function Media() {
               Rp. 399K<span className="text-stone-700 text-base">/Jam</span>
             </div>
             <div>
-              <button className="bg-yellow-400 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold">
+              <button className="bg-yellow-300 hover:bg-sky-500 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold">
                 Jadwalkan Konsultasi
               </button>
             </div>
@@ -94,7 +94,7 @@ function Media() {
               Rp. 249K<span className="text-stone-700 text-base">/Jam</span>
             </div>
             <div>
-              <button className="bg-yellow-400 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold">
+              <button className="bg-yellow-300 hover:bg-sky-500 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold">
                 Jadwalkan Konsultasi
               </button>
             </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import cuateImage from "../../assets/img/cuate1.svg";
 import { IMAGES } from "../../assets/constant";
+import { Link } from "react-scroll";
 
 function Hero() {
   return (
@@ -12,7 +13,7 @@ function Hero() {
             <p className="md:mb-3">Kesehatan Mental </p>
             <p>
               Anda
-              <span className="text-yellow-400"> Dimulai Di Sini</span>
+              <span className="text-yellow-300"> Dimulai Di Sini</span>
             </p>
           </div>
           <p className="font-light text-sm mt-3 max-w-lg">
@@ -20,9 +21,11 @@ function Hero() {
             hubungi kami untuk mendapatkan panduan dan dukungan yang Anda
             butuhkan.
           </p>
-          <button className="bg-yellow-400 text-blue-950 px-6 py-2 rounded-xl mt-10 font-semibold">
-            Jadwalkan Konsultasi
-          </button>
+          <Link to="pricing" smooth={true}>
+            <button className="bg-yellow-300 hover:bg-sky-500  text-blue-950 px-6 py-2 rounded-xl mt-10 font-semibold">
+              Jadwalkan Konsultasi
+            </button>
+          </Link>
         </div>
         <div className="mx-auto mt-10 pt-10 md:pt-0 max-[100%]: items-center">
           <img src={IMAGES.imgHero} alt="Ilustrator" width={900} />
