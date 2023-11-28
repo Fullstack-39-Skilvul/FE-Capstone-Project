@@ -1,8 +1,56 @@
 import { CalendarCheck, PhoneCall } from '@phosphor-icons/react'
+import axios from 'axios'
+import { format } from 'date-fns'
 import { Calendar, Clock, MapPinLine } from 'phosphor-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 const MediaSesi = () => {
+    const { id, idbooking } = useParams()
+
+    const [konselor, setKonselor] = useState(null)
+    const [booking, setBooking] = useState(null)
+
+
+
+    // ambil data
+    async function getKonselor() {
+        try {
+            const res = await axios.get('https://nice-gold-indri-sari.cyclic.app/konselors/' + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMDY2NzMxfQ.d9ADnKK-sYhF1HvlfzF8mVdGfQPR9xb987m707OD-zM',
+                }
+            });
+
+            setKonselor(res.data)
+            
+        } catch (error) {
+            console.error(error);
+            // return error
+        }
+    }
+    async function getBooking() {
+        try {
+            const res = await axios.get('https://nice-gold-indri-sari.cyclic.app/bookings/' + idbooking, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMDY2NzMxfQ.d9ADnKK-sYhF1HvlfzF8mVdGfQPR9xb987m707OD-zM',
+                }
+            });
+
+            setBooking(res.data)
+            // console.log(res.data);
+        } catch (error) {
+            console.error(error);
+            // return error
+        }
+    }
+
+    useEffect(() => {
+        getKonselor();
+        getBooking();
+    }, []);
     return (
         <>
             <div className='pr-4 pl-2 pb-2 border-b-2 border-r border-blue-700' style={{ boxShadow: '8px 9px 7px -3px rgba(0,0,0,0.1)', }}>
@@ -10,21 +58,21 @@ const MediaSesi = () => {
                     <Clock size={24} color="#1C79F2" weight="fill" />
                 </div>
                 <h3 className='font-bold text-sm'>Waktu Konseling</h3>
-                <h5>Pukul : 08.00 WIB</h5>
+                <h5>{booking ? 'Pukul ' + booking.waktu + ' WIB' : "loading"}</h5>
             </div>
             <div className='pr-4 pl-2 border-b-2 border-r border-blue-700' style={{ boxShadow: '8px 9px 7px -3px rgba(0,0,0,0.1)', }}>
                 <div className='bg-white pl-[1px] w-[26px] items-center rounded-md'>
                     <MapPinLine size={24} color="#1C79F2" weight="fill" />
                 </div>
                 <h3 className='font-bold text-sm'>Tempat</h3>
-                <h5>Online Meet</h5>
+                <h5>{booking ? booking.jenisKonseling.jenis : "loading"}</h5>
             </div>
             <div className='pr-4 pl-2 border-b-2 border-r border-blue-700' style={{ boxShadow: '8px 9px 7px -3px rgba(0,0,0,0.1)', }}>
                 <div className='bg-white pl-[1px] w-[26px] items-center rounded-md'>
                     <Calendar size={24} color="#1C79F2" weight="fill" />
                 </div>
                 <h3 className='font-bold text-sm'>Tanggal</h3>
-                <h5>25 November 2023</h5>
+                <h5>{booking ? format(new Date(booking.tanggal), 'dd MMMM yyyy') : "loading"}</h5>
             </div>
             <div className='pr-4 pl-2 border-b-2 border-r border-blue-700' style={{ boxShadow: '8px 9px 7px -3px rgba(0,0,0,0.1)', }}>
                 <div className='bg-white pl-[1px] w-[26px] items-center rounded-md'>
