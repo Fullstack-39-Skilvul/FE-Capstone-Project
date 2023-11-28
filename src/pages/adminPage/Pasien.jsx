@@ -1,10 +1,20 @@
 import { Button, Modal } from "flowbite-react";
 import { FileSearch } from "phosphor-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getDataPasien } from "../../redux/action/pasienAction";
 
 function Pasien() {
   const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoading, pasiens } = useSelector((state) => state.pasien);
+
+  console.log(pasiens.data);
+
+  useEffect(() => {
+    dispatch(getDataPasien());
+  }, []);
 
   return (
     <div>
@@ -40,32 +50,34 @@ function Pasien() {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  Viki Ade Safaat
-                </th>
-                <td className="px-6 py-4">vikiade@gmail.com</td>
-                <td className="px-6 py-4">Bandung</td>
-                <td className="px-6 py-4">089676838269</td>
-                <td className="px-6 py-4 gap-2 flex items-center">
-                  <a
-                    onClick={() => setOpenModal(true)}
-                    href="#"
-                    className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
+              {pasiens?.data.map((item) => (
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    Update
-                  </a>
-                  <a
-                    href="#"
-                    className="font-medium bg-red-400 text-white py-1 px-2 rounded-lg"
-                  >
-                    Delete
-                  </a>
-                </td>
-              </tr>
+                    {item.namaPasien}
+                  </th>
+                  <td className="px-6 py-4">{item.email}</td>
+                  <td className="px-6 py-4">{item.alamat}</td>
+                  <td className="px-6 py-4">{item.noTelepon}</td>
+                  <td className="px-6 py-4 gap-2 flex items-center">
+                    <a
+                      onClick={() => setOpenModal(true)}
+                      href="#"
+                      className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
+                    >
+                      Update
+                    </a>
+                    <a
+                      href="#"
+                      className="font-medium bg-red-400 text-white py-1 px-2 rounded-lg"
+                    >
+                      Delete
+                    </a>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
