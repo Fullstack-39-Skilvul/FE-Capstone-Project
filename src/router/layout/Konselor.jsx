@@ -10,6 +10,7 @@ function LandingPageLayout() {
       <Navbar />
       <Routes>
         <Route path="/" element={<KonselorPage />} />
+        <Route path="/:id" element={<KonselorPage />} />
       </Routes>
       <Footer />
     </div>

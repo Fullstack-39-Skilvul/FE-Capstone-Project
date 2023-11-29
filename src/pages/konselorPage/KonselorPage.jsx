@@ -9,11 +9,6 @@ const KonselorPage = () => {
             <Title />
             <div className='flex flex-wrap justify-center'>
                 <CardKonselor />
-                <CardKonselor />
-                <CardKonselor />
-                <CardKonselor />
-                <CardKonselor />
-                <CardKonselor />
             </div>
         </>
     )
