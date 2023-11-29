@@ -1,20 +1,62 @@
-import { Button, Modal } from "flowbite-react";
-import { FileSearch } from "phosphor-react";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { Button, Modal, Spinner } from "flowbite-react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDataPasien } from "../../redux/action/pasienAction";
+import {
+  deleteDataPasien,
+  getDataPasien,
+  updateDataPasien,
+} from "../../redux/action/pasienAction";
 
 function Pasien() {
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
+
+  const [isEdit, setIsEdit] = useState("");
+  const [editPasien, setEditPasien] = useState(null);
+
+  // Tambahkan state newValue untuk menyimpan nilai yang akan disimpan
+  const [newValue, setNewValue] = useState({
+    namaPasien: "",
+    email: "",
+    alamat: "",
+    noTelepon: "",
+  });
+
   const { isLoading, pasiens } = useSelector((state) => state.pasien);
 
-  console.log(pasiens.data);
-
+  // console.log(pasiens);
   useEffect(() => {
     dispatch(getDataPasien());
-  }, []);
+  }, [dispatch]);
+
+  const handleEdit = (id) => {
+    const selectPasien = pasiens.data?.find((item) => item._id === id);
+    setEditPasien(selectPasien);
+
+    // Set nilai awal ke dalam state newValue
+    setNewValue({
+      namaPasien: selectPasien ? selectPasien.namaPasien : "",
+      email: selectPasien ? selectPasien.email : "",
+      alamat: selectPasien ? selectPasien.alamat : "",
+      noTelepon: selectPasien ? selectPasien.noTelepon : "",
+    });
+
+    setOpenModal(true);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    await dispatch(updateDataPasien(editPasien._id, newValue));
+    dispatch(getDataPasien()); // Ambil data pasien setelah pembaruan
+    setOpenModal(false);
+    setIsEdit("");
+    setEditPasien(null);
+  };
+
+  const handleDelete = async (id) => {
+    await dispatch(deleteDataPasien(id));
+    dispatch(getDataPasien()); // Ambil data pasien setelah pembaruan
+  };
 
   return (
     <div>
@@ -50,8 +92,11 @@ function Pasien() {
               </tr>
             </thead>
             <tbody>
-              {pasiens?.data.map((item) => (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              {pasiens.data?.map((item) => (
+                <tr
+                  key={item._id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -63,13 +108,14 @@ function Pasien() {
                   <td className="px-6 py-4">{item.noTelepon}</td>
                   <td className="px-6 py-4 gap-2 flex items-center">
                     <a
-                      onClick={() => setOpenModal(true)}
+                      onClick={() => handleEdit(item._id)}
                       href="#"
                       className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
                     >
                       Update
                     </a>
                     <a
+                      onClick={() => handleDelete(item._id)}
                       href="#"
                       className="font-medium bg-red-400 text-white py-1 px-2 rounded-lg"
                     >
@@ -92,32 +138,48 @@ function Pasien() {
                 className="border rounded-lg"
                 type="text"
                 placeholder="Nama Pasien"
+                value={newValue.namaPasien}
+                onChange={(e) =>
+                  setNewValue({ ...newValue, namaPasien: e.target.value })
+                }
               />
 
-              <label htmlFor="nama">Email</label>
+              <label htmlFor="email">Email</label>
               <input
                 className="border rounded-lg"
                 type="email"
                 placeholder="Email"
+                value={newValue.email}
+                onChange={(e) =>
+                  setNewValue({ ...newValue, email: e.target.value })
+                }
               />
 
-              <label htmlFor="nama">Alamat</label>
+              <label htmlFor="alamat">Alamat</label>
               <input
                 className="border rounded-lg"
                 type="text"
                 placeholder="Alamat"
+                value={newValue.alamat}
+                onChange={(e) =>
+                  setNewValue({ ...newValue, alamat: e.target.value })
+                }
               />
 
-              <label htmlFor="nama">No Telepon</label>
+              <label htmlFor="noTelepon">No Telepon</label>
               <input
                 className="border rounded-lg"
                 type="number"
                 placeholder="No Telepon"
+                value={newValue.noTelepon}
+                onChange={(e) =>
+                  setNewValue({ ...newValue, noTelepon: e.target.value })
+                }
               />
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => setOpenModal(false)}>I accept</Button>
+            <Button onClick={handleUpdate}>I accept</Button>
             <Button color="gray" onClick={() => setOpenModal(false)}>
               Decline
             </Button>

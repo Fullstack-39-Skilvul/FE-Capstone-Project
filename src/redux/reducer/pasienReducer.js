@@ -17,7 +17,45 @@ export const pasienReducer = (state = initialValue, action) => {
         isLoading: false,
         pasiens: action.payload,
       };
-    case "FETCH_PASIEN_FAILURE": // Tambahkan case ini untuk menangani kesalahan fetch
+    case "FETCH_PASIEN_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    case "UPDATE_DATA_PASIEN":
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case "SUCCESS_UPDATE_DATA_PASIEN":
+      return {
+        ...state,
+        isLoading: false,
+        pasiens: state.pasiens.map((pasien) =>
+          pasien._id === action.payload._id ? action.payload : pasien
+        ),
+      };
+    case "FAILURE_UPDATE_DATA_PASIEN":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    case "DELETE_DATA_PASIEN":
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case "SUCCESS_DELETE_DATA_PASIEN":
+      return {
+        ...state,
+        isLoading: false,
+        pasiens: state.pasiens.filter(
+          (pasien) => pasien._id !== action.payload
+        ),
+      };
+    case "FAILURE_DELETE_DATA_PASIEN":
       return {
         ...state,
         isLoading: false,
