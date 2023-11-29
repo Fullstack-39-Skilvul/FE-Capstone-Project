@@ -13,7 +13,7 @@ function RouterManagement() {
       <Suspense>
         <Routes>
           <Route path="/*" element={<LandingPageLayout />} />
-          <Route path="/detailkonselor" element={<DetailKonselor />} />
+          <Route path="/detailkonselor/*" element={<DetailKonselor />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

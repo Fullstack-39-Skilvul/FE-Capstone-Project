@@ -10,6 +10,7 @@ function DetailPage() {
       <Navbar />
       <Routes>
         <Route path="/" element={<DetailKonselor />} />
+        <Route path="/:id/:idbooking" element={<DetailKonselor />} />
       </Routes>
       <Footer />
     </div>

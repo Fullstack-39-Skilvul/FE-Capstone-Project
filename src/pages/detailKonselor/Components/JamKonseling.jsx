@@ -1,5 +1,6 @@
-import React from 'react'
-import { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const JamKonseling = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -9,10 +10,76 @@ const JamKonseling = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleTimeSelection = (time) => {
+    const handleTimeSelection = async (time) => {
+
+        const selectedHour = time.split(' ')[0];
+
         setSelectedTime(time);
         setIsOpen(false);
+
+        try {
+            // Kirim data update ke server
+            const updatedData = {
+                waktu: selectedHour,
+            };
+
+            // Ganti URL endpoint sesuai kebutuhan Anda
+            const res = await axios.put(`https://be-capstone-project.vercel.app/bookings/` + idbooking, updatedData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMDY2NzMxfQ.d9ADnKK-sYhF1HvlfzF8mVdGfQPR9xb987m707OD-zM',
+                },
+            });
+
+            console.log('Data berhasil diperbarui:', res.data);
+        } catch (error) {
+            console.error('Error saat memperbarui data:', error);
+        }
     };
+
+    const { id, idbooking } = useParams();
+
+    const [konselor, setKonselor] = useState(null);
+    const [booking, setBooking] = useState(null);
+
+    // ambil data
+    async function getKonselor() {
+        try {
+            const res = await axios.get(`https://be-capstone-project.vercel.app/konselors/` + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMDY2NzMxfQ.d9ADnKK-sYhF1HvlfzF8mVdGfQPR9xb987m707OD-zM',
+                },
+            });
+
+            setKonselor(res.data);
+        } catch (error) {
+            console.error(error);
+            // return error
+        }
+    }
+
+    async function getBooking() {
+        try {
+            const res = await axios.get(`https://be-capstone-project.vercel.app/bookings/` + idbooking, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMDY2NzMxfQ.d9ADnKK-sYhF1HvlfzF8mVdGfQPR9xb987m707OD-zM',
+                },
+            });
+
+            setBooking(res.data);
+        } catch (error) {
+            console.error(error);
+            // return error
+        }
+    }
+
+    useEffect(() => {
+        getKonselor();
+        getBooking();
+    }, []);
+
     return (
         <>
             <div className="inline-flex mt-4 bg-white border border-[#1C79F2] rounded-2xl">
@@ -71,9 +138,8 @@ const JamKonseling = () => {
                     )}
                 </div>
             </div>
-
         </>
-    )
-}
+    );
+};
 
-export default JamKonseling
+export default JamKonseling;
