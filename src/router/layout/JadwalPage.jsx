@@ -10,7 +10,7 @@ function JadwalPage() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Penjadwalan />} />
-        <Route path="/:id/:idbooking" element={<Penjadwalan />} />
+        <Route path="/:id/:idbooking/:idjenis" element={<Penjadwalan />} />
 
       </Routes>
       <Footer />
