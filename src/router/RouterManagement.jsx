@@ -6,6 +6,7 @@ import ContactPage from "../pages/contactPage/ContactPage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import DetailKonselor from "./layout/DetailPage";
+import Penjadwalan from "./layout/JadwalPage";
 
 function RouterManagement() {
   return (
@@ -18,6 +19,8 @@ function RouterManagement() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin/*" element={<AdminPageLayout />} />
+          <Route path="/booking" element={<Penjadwalan />} />
+
         </Routes>
       </Suspense>
     </div>
