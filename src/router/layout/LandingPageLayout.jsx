@@ -10,6 +10,8 @@ function LandingPageLayout() {
       <NavbarComponent />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/:id" element={<LandingPage />} />
+
       </Routes>
       <Footer />
     </div>

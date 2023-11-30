@@ -9,6 +9,7 @@ const Card = () => {
     const [booking, setBooking] = useState(null)
 
 
+
     // ambil data
   async function getBooking() {
       try {
@@ -55,7 +56,7 @@ const Card = () => {
                     <div className='flex justify-end my-7 mx-2'>
                         <div className='flex w-2/3 justify-between border-b gap-2 border-gray-600'>
                             <p className='text-white text-sm'>Total</p>
-                            <p className='text-white text-sm'>{booking ? formatRupiah(booking.jenisKonseling.harga) : "loading"}</p>
+                            <p className='text-white text-sm'>{booking ? formatRupiah(booking.jenisKonseling.harga) : "loading..."}</p>
                         </div>
 
                     </div>

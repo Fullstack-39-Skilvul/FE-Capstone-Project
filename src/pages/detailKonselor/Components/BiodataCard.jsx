@@ -8,42 +8,51 @@ import axios from 'axios'
 const BiodataCard = () => {
     const { id } = useParams();
     const navigation = useNavigate();
-    
+
 
     const [jam, setJam] = useState('')
     const [tanggal, setTanggal] = useState('')
     const [konselor, setKonselor] = useState(null);
     const [bookingId, setBookingId] = useState(null);
 
-    const submitHandler = (e) => {
-        e.preventDefault()
+    // Ambil data dari localStorage
+    const storedBooking = localStorage.getItem(`metode`);
+    const localStorageBooking = storedBooking ? JSON.parse(storedBooking) : null;
+
+    const jenisId = localStorageBooking? localStorageBooking.id : null;
+
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
         console.log({
             jam: jam,
             tanggal: tanggal
-        })
+        });
         console.log(
             {
-                tanggal: tanggal,//new Date().toISOString().split('T')[0], // Tanggal saat ini, Anda bisa mengganti sesuai kebutuhan
+                tanggal: tanggal,
                 waktu: jam,
-                pasien: "65640d96223d7d39596ad5d2", // Ganti dengan id pasien yang sesuai
-                konselor: id, // Ganti dengan id konselor yang sesuai
-                jenisKonseling: "6561b726b0edf6551d1a3c44", // Ganti dengan id jenis konseling yang sesuai
-            })
-        submitbutton()
-    }
+                pasien: "65640d96223d7d39596ad5d2",
+                konselor: id,
+                jenisKonseling: jenisId, // Tidak perlu mengatur jenisId di sini
+            }
+        );
+        submitbutton();
+    };
+    
     const submitbutton = async () => {
 
         try {
             // Persiapkan data booking yang sesuai
             const bookingData = {
-                tanggal: tanggal,//new Date().toISOString().split('T')[0], // Tanggal saat ini, Anda bisa mengganti sesuai kebutuhan
+                tanggal: tanggal,
                 waktu: jam,
-                pasien: "65640d96223d7d39596ad5d2", // Ganti dengan id pasien yang sesuai
-                konselor: id, // Ganti dengan id konselor yang sesuai
-                jenisKonseling: "6561b726b0edf6551d1a3c44", // Ganti dengan id jenis konseling yang sesuai
+                pasien: "65640d96223d7d39596ad5d2", 
+                konselor: id, 
+                jenisKonseling: jenisId, 
             };
 
-            // Ganti URL endpoint sesuai kebutuhan Anda
+            // Kirim data booking ke API
             const res = await axios.post(
                 `https://be-capstone-project.vercel.app/bookings/`,
                 bookingData,
@@ -60,7 +69,7 @@ const BiodataCard = () => {
             console.log('Data berhasil ditambahkan:', res.data);
             setBookingId(res.data.id);
             navigation(`/booking/${res.data.id}`);
-           
+
 
 
         } catch (error) {
@@ -93,7 +102,7 @@ const BiodataCard = () => {
             // return error
         }
     }
-    
+
 
     useEffect(() => {
         getKonselor();
@@ -114,11 +123,11 @@ const BiodataCard = () => {
                     </div>
 
                     <div className='flex justify-end w-full mt-6'>
-                       
-                            <Link className='flex p-2 px-4 bg-[#063D82] hover:bg-blue-700 hover:border-b hover:border-[#063D82] text-white text-sm rounded-2xl' to={`/booking/${bookingId}`} onClick={submitHandler}>
-                                Booking Now
-                            </Link>
-                        
+
+                        <Link className='flex p-2 px-4 bg-[#063D82] hover:bg-blue-700 hover:border-b hover:border-[#063D82] text-white text-sm rounded-2xl' to={`/booking/${bookingId}`} onClick={submitHandler}>
+                            Booking Now
+                        </Link>
+
                     </div>
                 </div>
             </div>
