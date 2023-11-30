@@ -7,12 +7,12 @@ function Payment() {
   const [selectedBank, setSelectedBank] = useState('');
   const handlePaymentProofSubmit = async () => {
     try {
-      const response = await axios.post('https://your-api-url.com/payment-proof', {
+      const response = await axios.post('https://be-capstone-project.vercel.app/payments', {
         selectedBank, 
       });
       console.log('Response from API:', response.data);
     } catch (error) {
-      console.error('Error sending payment proof:', error);
+      console.error('Error sending payment', error);
     }
   };
   return (
