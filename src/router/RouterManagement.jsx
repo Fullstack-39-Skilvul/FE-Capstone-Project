@@ -7,6 +7,8 @@ import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import DetailKonselor from "./layout/DetailPage";
 import KonselorPage from "./layout/Konselor";
+import JadwalPage from "./layout/JadwalPage";
+
 
 function RouterManagement() {
   return (
@@ -20,6 +22,7 @@ function RouterManagement() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin/*" element={<AdminPageLayout />} />
           <Route path="/konselor/*" element={<KonselorPage />} />
+          <Route path="/booking/*" element={<JadwalPage />} />
         </Routes>
       </Suspense>
     </div>
