@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 const CardKonselor = () => {
-    const { id, idbooking } = useParams()
+    const { id } = useParams()
 
     const [konselor, setKonselor] = useState(null)
 
