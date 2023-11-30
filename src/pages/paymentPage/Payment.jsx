@@ -1,7 +1,20 @@
+import axios from "axios";
 import { WhatsappLogo } from "phosphor-react";
 import React from "react";
+import { useState } from "react";
 
 function Payment() {
+  const [selectedBank, setSelectedBank] = useState('');
+  const handlePaymentProofSubmit = async () => {
+    try {
+      const response = await axios.post('https://your-api-url.com/payment-proof', {
+        selectedBank, 
+      });
+      console.log('Response from API:', response.data);
+    } catch (error) {
+      console.error('Error sending payment proof:', error);
+    }
+  };
   return (
     <div className="flex flex-col  justify-center items-center">
       <div className="text-2xl lg:mt-[100px] md:mb-5 md:text-4xl text-center font-bold text-blue-950">
@@ -13,20 +26,12 @@ function Payment() {
           <div className="p-10 w-96">
             <div>No rek :</div>
             <div className="flex justify-between shadow-xl border rounded-lg border-gray-200 px-3 py-2">
-              <select name="" id="" className="w-full rounded">
-                <option value="" className="flex justify-between">
-                  222-222-444-555 <div> BRI</div>
-                </option>
-                <option value="" className="flex justify-between">
-                  231-492-091-283 <div> BCA</div>
-                </option>
-                <option value="" className="flex justify-between">
-                  222-222-444-555 <div> BNI</div>
-                </option>
-                <option value="" className="flex justify-between">
-                  222-222-444-555 <div> MANDIRI</div>
-                </option>
-              </select>
+            <select name="" id="" className="w-full rounded">
+            <option value="222-222-444-555 BRI" className="flex justify-between">222-222-444-555 BRI</option>
+            <option value="231-492-091-283 BCA" className="flex justify-between">231-492-091-283 BCA</option>
+            <option value="222-222-444-555 BNI" className="flex justify-between">222-222-444-555 BNI</option>
+            <option value="222-222-444-555 MANDIRI" className="flex justify-between">222-222-444-555 MANDIRI</option>
+            </select>
             </div>
             <br />
             <div>Atas Nama :</div>
@@ -53,7 +58,8 @@ function Payment() {
           </ol>
         </div>
 
-        <button className="flex gap-2 mt-10 items-center justify-center w-96 bg-sky-500 rounded-lg py-2 text-white">
+        <button className="flex gap-2 mt-10 items-center justify-center w-96 bg-sky-500 rounded-lg py-2 text-white"
+         onClick={handlePaymentProofSubmit}>
           <div>Kirim Bukti Pembayaran</div>
           <WhatsappLogo size={20} />
         </button>
