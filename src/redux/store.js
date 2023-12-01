@@ -5,6 +5,7 @@ import { konselorReducer } from "./reducer/konselorReducer";
 import { spesialisasiReducer } from "./reducer/spesialisasiReducer";
 import { bookingReducer } from "./reducer/bookingAdminReducer";
 import { paymentReducer } from "./reducer/paymetAdminReducer";
+import authReducer from "./reducer/loginReducer";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     spesialis: spesialisasiReducer,
     bookingAdmin: bookingReducer,
     paymentAdmin: paymentReducer,
+    auth: authReducer,
   },
 });

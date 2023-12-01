@@ -43,11 +43,22 @@ const deleteBookingFailure = (error) => ({
   payload: error,
 });
 
-const config = {
-  headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMjI5NjA2fQ.rKE20Vx28yxyRbqaAFbtgpiX3nZojtreQfeq4yOEYxA`,
-  },
+const config = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token is missing in localStorage");
+    return {};
+  }
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
+
+const axiosConfig = config();
 
 export const getDataBooking = () => {
   return async (dispatch) => {
@@ -55,7 +66,7 @@ export const getDataBooking = () => {
     try {
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/bookings",
-        config
+        axiosConfig
       );
       dispatch(fetchBookingSuccess(response.data));
     } catch (error) {
@@ -71,7 +82,7 @@ export const updateDataBooking = (id, newValues) => {
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/bookings/${id}`,
         newValues,
-        config
+        axiosConfig
       );
       dispatch(updateBookingSuccess(response.data));
       toast.success("Berhasil memperbarui data !");
@@ -88,7 +99,7 @@ export const deleteDataBooking = (id) => {
     try {
       await axios.delete(
         `https://be-capstone-project.vercel.app/bookings/${id}`,
-        config
+        axiosConfig
       );
       dispatch(deleteBookingSuccess(id));
       toast.success("Berhasil menghapus data!");
@@ -105,7 +116,7 @@ export const createDataBooking = (newBooking) => {
       await axios.post(
         "https://be-capstone-project.vercel.app/bookings",
         newBooking,
-        config
+        axiosConfig
       );
       dispatch(getDataBooking());
     } catch (error) {

@@ -43,11 +43,22 @@ const deletePaymentFailure = (error) => ({
   payload: error,
 });
 
-const config = {
-  headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMjI5NjA2fQ.rKE20Vx28yxyRbqaAFbtgpiX3nZojtreQfeq4yOEYxA`,
-  },
+const config = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token is missing in localStorage");
+    return {};
+  }
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
+
+const axiosConfig = config();
 
 export const getDataPayment = () => {
   return async (dispatch) => {
@@ -55,7 +66,7 @@ export const getDataPayment = () => {
     try {
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/payments",
-        config
+        axiosConfig
       );
       dispatch(fetchPaymentSuccess(response.data));
     } catch (error) {
@@ -71,7 +82,7 @@ export const updateDataPayment = (id, newValues) => {
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/payments/${id}`,
         newValues,
-        config
+        axiosConfig
       );
       dispatch(updatePaymentSuccess(response.data));
       toast.success("Status berhasil di rubah!");
@@ -88,7 +99,7 @@ export const deleteDataPayment = (id) => {
     try {
       await axios.delete(
         `https://be-capstone-project.vercel.app/payments/${id}`,
-        config
+        axiosConfig
       );
       dispatch(deletePaymentSuccess(id));
       toast.success("Data berhasil dihapus!");
@@ -105,7 +116,7 @@ export const createDataPayment = (newPayment) => {
       await axios.post(
         "https://be-capstone-project.vercel.app/payments",
         newPayment,
-        config
+        axiosConfig
       );
       dispatch(getDataPayment());
       toast.success("Berhasil membuat data!");

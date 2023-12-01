@@ -43,10 +43,37 @@ const deletePasienFailure = (error) => ({
   payload: error,
 });
 
-const config = {
-  headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMTUwOTczfQ.6TTkIUZe5uWBelfnS-l2ESf3X9oLRLxhKTPYQDImERE`,
-  },
+const config = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token is missing in localStorage");
+    return {};
+  }
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
+
+const axiosConfig = config();
+
+export const createDataPasien = (newValue) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(
+        "https://be-capstone-project.vercel.app/pasiens",
+        newValue
+      );
+      dispatch(getDataKonselor());
+      toast.success("Data berhasil ditambahkan !");
+    } catch (error) {
+      console.error("Error creating Pasien:", error.message);
+      toast.success("Data gagal ditambahkan !");
+    }
+  };
 };
 
 export const getDataPasien = () => {
@@ -55,7 +82,7 @@ export const getDataPasien = () => {
     try {
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/pasiens",
-        config
+        axiosConfig
       );
       dispatch(fetchPasienSuccess(response.data));
     } catch (error) {
@@ -71,7 +98,7 @@ export const updateDataPasien = (_id, newValues) => {
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/pasiens/${_id}`,
         newValues,
-        config
+        axiosConfig
       );
       dispatch(updatePasienSuccess(response.data));
       toast.success("Data berhasil diperbarui !");
@@ -88,7 +115,7 @@ export const deleteDataPasien = (id) => {
     try {
       await axios.delete(
         `https://be-capstone-project.vercel.app/pasiens/${id}`,
-        config
+        axiosConfig
       );
       dispatch(deletePasienSuccess(id));
       toast.success("Data berhasil dihapus !");
