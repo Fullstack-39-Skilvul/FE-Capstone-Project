@@ -2,6 +2,7 @@ import {
   Bandaids,
   Gauge,
   HardDrive,
+  Money,
   SignOut,
   Syringe,
   User,
@@ -40,6 +41,12 @@ export const DATA_MENU = [
   },
   {
     id: 6,
+    menu: "Data Payment",
+    link: "/admin/payment",
+    icon: <Money />,
+  },
+  {
+    id: 7,
     menu: "Sign Out",
     link: "/login",
     icon: <SignOut />,

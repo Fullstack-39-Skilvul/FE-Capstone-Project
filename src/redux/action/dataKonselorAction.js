@@ -19,7 +19,7 @@ export const getDataKonselor = () => {
     dispatch(fetchKonselorRequest());
     try {
       const response = await axios.get(
-        "https://nice-gold-indri-sari.cyclic.app/konselors/data-konselor"
+        "https://be-capstone-project.vercel.app/konselors/data-konselor"
       );
       dispatch(fetchKonselorSuccess(response.data));
     } catch (error) {
