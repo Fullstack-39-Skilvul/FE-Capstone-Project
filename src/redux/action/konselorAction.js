@@ -43,11 +43,22 @@ const deleteKonselorFailure = (error) => ({
   payload: error,
 });
 
-const config = {
-  headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMjIyNDQ1fQ.T2InG64U2iifdMoJGciuW64le8vh9LrZx0Wfc0JMGIo`,
-  },
+const config = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token is missing in localStorage");
+    return {};
+  }
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
+
+const axiosConfig = config();
 
 export const getDataKonselor = () => {
   return async (dispatch) => {
@@ -55,7 +66,7 @@ export const getDataKonselor = () => {
     try {
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/konselors",
-        config
+        axiosConfig
       );
       dispatch(fetchKonselorSuccess(response.data));
     } catch (error) {
@@ -71,7 +82,7 @@ export const updateDataKonselor = (_id, newValues) => {
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/konselors/${_id}`,
         newValues,
-        config
+        axiosConfig
       );
       dispatch(updateKonselorSuccess(response.data));
       toast.success("Data berhasil diperbarui !");
@@ -88,7 +99,7 @@ export const deleteDataKonselor = (id) => {
     try {
       await axios.delete(
         `https://be-capstone-project.vercel.app/konselors/${id}`,
-        config
+        axiosConfig
       );
       dispatch(deleteKonselorSuccess(id));
       toast.success("Data berhasil dihapus !");
@@ -105,7 +116,7 @@ export const createDataKonselor = (newKonselor) => {
       await axios.post(
         "https://be-capstone-project.vercel.app/konselors",
         newKonselor,
-        config
+        axiosConfig
       );
       dispatch(getDataKonselor());
       toast.success("Data berhasil ditambahkan !");
