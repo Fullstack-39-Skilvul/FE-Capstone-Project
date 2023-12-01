@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const fetchKonselorRequest = () => ({
   type: "GET_DATA_KONSELOR",
@@ -73,8 +74,10 @@ export const updateDataKonselor = (_id, newValues) => {
         config
       );
       dispatch(updateKonselorSuccess(response.data));
+      toast.success("Data berhasil diperbarui !");
     } catch (error) {
       dispatch(updateKonselorFailure(error.message));
+      toast.error("Data gagal diperbarui !");
     }
   };
 };
@@ -88,8 +91,10 @@ export const deleteDataKonselor = (id) => {
         config
       );
       dispatch(deleteKonselorSuccess(id));
+      toast.success("Data berhasil dihapus !");
     } catch (error) {
       dispatch(deleteKonselorFailure(error.message));
+      toast.error("Data gagal dihapus !");
     }
   };
 };
@@ -103,9 +108,10 @@ export const createDataKonselor = (newKonselor) => {
         config
       );
       dispatch(getDataKonselor());
+      toast.success("Data berhasil ditambahkan !");
     } catch (error) {
-      // Handle error jika terjadi
       console.error("Error creating Konselor:", error.message);
+      toast.success("Data gagal ditambahkan !");
     }
   };
 };

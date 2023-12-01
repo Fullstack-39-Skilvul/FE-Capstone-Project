@@ -1,45 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getDataKonselor,
-  createDataKonselor,
-  deleteDataKonselor,
-  updateDataKonselor,
-} from "../../redux/action/konselorAction";
-import { Modal, Button, Spinner } from "flowbite-react";
-import { getDataSpesialisasi } from "../../redux/action/spesialisasiAction";
+  deleteDataBooking,
+  getDataBooking,
+} from "../../redux/action/bookingAdminAction";
+import dayjs from "dayjs";
+import { Button, Modal, Spinner } from "flowbite-react";
 import { Toaster } from "react-hot-toast";
 
-function Konselor() {
+function Booking() {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editKonselor, setEditKonselor] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [selectedSpesialisasi, setSelectedSpesialisasi] = useState("");
-  const [newKonselor, setNewKonselor] = useState({
-    nama: "",
-    email: "",
-    alamat: "",
-    noTelepon: "",
-  });
+  const [isEdit, setIsEdit] = useState("");
+  const [editBooking, setEditBooking] = useState(null);
+  const { isLoading, bookings } = useSelector((state) => state.bookingAdmin);
 
-  const { isLoading, konselors } = useSelector((state) => state.konselor);
-  const { isLoadingSpesialisasi, spesialisasis } = useSelector(
-    (state) => state.spesialis
-  );
-
+  console.log(bookings?.data);
   useEffect(() => {
-    dispatch(getDataKonselor());
-    dispatch(getDataSpesialisasi());
+    dispatch(getDataBooking());
   }, [dispatch]);
 
   const handleSearch = (e) => {
     setSearchKeyword(e.target.value);
   };
 
-  const filteredKonselors = konselors.data?.filter((item) =>
+  const filteredBookings = bookings.data?.filter((item) =>
     Object.values(item).some(
       (value) =>
         typeof value === "string" &&
@@ -47,83 +34,24 @@ function Konselor() {
     )
   );
 
-  const handleCreate = () => {
-    setIsEditing(false);
-    setOpenModal(true);
-  };
-
-  const handleEdit = (id) => {
-    const selectedKonselor = konselors.data?.find((item) => item._id === id);
-    setEditKonselor(selectedKonselor);
-
-    setNewKonselor({
-      nama: selectedKonselor ? selectedKonselor.nama : "",
-      email: selectedKonselor ? selectedKonselor.email : "",
-      alamat: selectedKonselor ? selectedKonselor.alamat : "",
-      noTelepon: selectedKonselor ? selectedKonselor.noTelepon : "",
-    });
-
-    setSelectedSpesialisasi(
-      selectedKonselor.spesialisasi.length > 0
-        ? selectedKonselor.spesialisasi[0]._id
-        : ""
-    );
-
-    setIsEditing(true);
-    setOpenModal(true);
-  };
-
-  const handleSaveData = async () => {
-    const konselorData = {
-      ...newKonselor,
-      spesialisasi: selectedSpesialisasi,
-    };
-
-    if (isEditing) {
-      dispatch(updateDataKonselor(editKonselor._id, konselorData));
-    } else {
-      dispatch(createDataKonselor(konselorData));
-    }
-
-    dispatch(getDataKonselor());
-    setOpenModal(false);
-    setEditKonselor(null);
-    setNewKonselor({
-      nama: "",
-      email: "",
-      alamat: "",
-      noTelepon: "",
-    });
-    setSelectedSpesialisasi("");
-    setIsEditing(false);
-  };
-
   const handleDelete = (id) => {
-    // const selectedKonselor = konselors.data?.find((item) => item._id === id);
-    setEditKonselor(id);
     setOpenModalDelete(true);
+    setEditBooking(id);
   };
 
   const handleAcceptDelete = async () => {
-    await dispatch(deleteDataKonselor(editKonselor));
-    dispatch(getDataKonselor());
+    await dispatch(deleteDataBooking(editBooking));
+    dispatch(getDataBooking());
     setOpenModalDelete(false);
   };
 
   return (
     <div>
       <Toaster />
-      <div className="text-sky-500 font-semibold text-2xl">Data Konselor</div>
+      <div className="text-sky-500 font-semibold text-2xl">Data Booking</div>
       <div>
         <div className="flex justify-between items-center mt-5">
-          <div>
-            <button
-              onClick={handleCreate}
-              className="bg-sky-500 text-white py-1 px-2 rounded-lg hover:bg-sky-600"
-            >
-              Tambah data
-            </button>
-          </div>
+          <div></div>
           <input
             className="border h-8 rounded text-sm"
             type="search"
@@ -142,19 +70,25 @@ function Konselor() {
               <thead className="text-xs sticky top-0 z-10 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Image
+                    Nama Pasien
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Nama
+                    Nama Konselor
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Email
+                    Tanggal
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    No Telepon
+                    Jam
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Spesialisasi
+                    Jenis Konseling
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Platform
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Status
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Aksi
@@ -162,35 +96,29 @@ function Konselor() {
                 </tr>
               </thead>
               <tbody>
-                {filteredKonselors?.map((item) => (
+                {filteredBookings?.map((item) => (
                   <tr
                     key={item._id}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   >
-                    <td className="px-6 py-4">
-                      <img src={item.avatar} alt="" width={100} />
-                    </td>
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {item.nama}
+                      {item.pasien?.namaPasien}
                     </th>
-                    <td className="px-6 py-4">{item.email}</td>
-                    <td className="px-6 py-4">{item.noTelepon}</td>
-                    <td className="px-6 py-4">
-                      {item.spesialisasi.length > 0
-                        ? item.spesialisasi[0].namaSpesialisasi
-                        : "Belum ditentukan"}
+                    <td className="px-6 py-4">{item.konselor?.nama}</td>
+                    <td className="px-3 py-4">
+                      {dayjs(item.tanggal).format("DD-MM-YYYY")}
                     </td>
+                    <td className="px-6 py-4">{item.waktu}</td>
+                    <td className="px-6 py-4">{item.jenisKonseling?.jenis}</td>
+                    <td className="px-6 py-4">
+                      {item.jenisKonseling?.platformPertemuan}
+                    </td>
+                    <td className="px-6 py-4">{item.status}</td>
+
                     <td className="px-6 py-4 gap-2 flex items-center">
-                      <a
-                        onClick={() => handleEdit(item._id)}
-                        href="#"
-                        className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
-                      >
-                        Update
-                      </a>
                       <a
                         onClick={() => handleDelete(item._id)}
                         href="#"
@@ -207,10 +135,8 @@ function Konselor() {
         </div>
 
         {/* modal */}
-        <Modal show={openModal} onClose={() => setOpenModal(false)}>
-          <Modal.Header>
-            {isEditing ? "Update Data Konselor" : "Create Data Konselor"}
-          </Modal.Header>
+        {/* <Modal show={openModal} onClose={() => setOpenModal(false)}>
+          <Modal.Header>Create Data Konselor</Modal.Header>
           <Modal.Body>
             <form action="" className="flex flex-col text-sm gap-2">
               <label htmlFor="nama">Nama Konselor</label>
@@ -287,14 +213,15 @@ function Konselor() {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={handleSaveData}>Save</Button>
+            <Button onClick={handleCreateData}>I accept</Button>
             <Button color="gray" onClick={() => setOpenModal(false)}>
-              Cancel
+              Decline
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
         {/* akhir modal */}
 
+        {/* modal konfirmasi delete */}
         <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
           <Modal.Header>Hapus Data Pasien</Modal.Header>
           <Modal.Body>
@@ -315,9 +242,10 @@ function Konselor() {
             </Button>
           </Modal.Footer>
         </Modal>
+        {/* akhir modal */}
       </div>
     </div>
   );
 }
 
-export default Konselor;
+export default Booking;

@@ -32,7 +32,7 @@ export const spesialisasiReducer = (state = initialValue, action) => {
       return {
         ...state,
         isLoading: false,
-        spesialisasis: state.spesialisasis.map((spesialisasi) =>
+        spesialisasis: state.spesialisasis.data?.map((spesialisasi) =>
           spesialisasi._id === action.payload._id
             ? action.payload
             : spesialisasi
@@ -53,7 +53,7 @@ export const spesialisasiReducer = (state = initialValue, action) => {
       return {
         ...state,
         isLoading: false,
-        spesialisasis: state.spesialisasis.filter(
+        spesialisasis: state.spesialisasis.data?.filter(
           (spesialisasi) => spesialisasi._id !== action.payload
         ),
       };

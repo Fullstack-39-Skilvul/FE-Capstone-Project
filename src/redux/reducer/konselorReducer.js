@@ -32,7 +32,7 @@ export const konselorReducer = (state = initialValue, action) => {
       return {
         ...state,
         isLoading: false,
-        konselors: state.konselors.map((konselor) =>
+        konselors: state.konselors?.data.map((konselor) =>
           konselor._id === action.payload._id ? action.payload : konselor
         ),
       };
@@ -51,7 +51,7 @@ export const konselorReducer = (state = initialValue, action) => {
       return {
         ...state,
         isLoading: false,
-        konselors: state.konselors.filter(
+        konselors: state.konselors?.data.filter(
           (konselor) => konselor._id !== action.payload
         ),
       };

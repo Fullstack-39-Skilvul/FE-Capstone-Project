@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const fetchSpesialisasiRequest = () => ({
   type: "GET_DATA_SPESIALISASI",
@@ -73,8 +74,10 @@ export const updateDataSpesialisasi = (id, newValues) => {
         config
       );
       dispatch(updateSpesialisasiSuccess(response.data));
+      toast.success("Berhasil memperbarui data!");
     } catch (error) {
       dispatch(updateSpesialisasiFailure(error.message));
+      toast.error("Gagal memperbarui data!");
     }
   };
 };
@@ -88,8 +91,10 @@ export const deleteDataSpesialisasi = (id) => {
         config
       );
       dispatch(deleteSpesialisasiSuccess(id));
+      toast.success("Berhasil menghapus data!");
     } catch (error) {
       dispatch(deleteSpesialisasiFailure(error.message));
+      toast.error("Gagal menghapus data!");
     }
   };
 };
@@ -103,8 +108,10 @@ export const createDataSpesialisasi = (newSpesialisasi) => {
         config
       );
       dispatch(getDataSpesialisasi());
+      toast.success("Berhasil membuat data !");
     } catch (error) {
       console.error("Error creating Spesialisasi:", error.message);
+      toast.error("Gagal membuat data !");
     }
   };
 };

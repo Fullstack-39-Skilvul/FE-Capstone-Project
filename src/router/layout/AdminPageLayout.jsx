@@ -7,6 +7,8 @@ import Dashboard from "../../pages/adminPage/Dashboard";
 import Pasien from "../../pages/adminPage/Pasien";
 import Konselor from "../../pages/adminPage/Konselor";
 import Spesialis from "../../pages/adminPage/Spesialis";
+import Booking from "../../pages/adminPage/Booking";
+import Payment from "../../pages/adminPage/payment";
 
 function AdminPageLayout() {
   return (
@@ -19,6 +21,8 @@ function AdminPageLayout() {
           <Route path="/pasien" element={<Pasien />} />
           <Route path="/konselor" element={<Konselor />} />
           <Route path="/spesialis" element={<Spesialis />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </ContentAdmin>
     </div>

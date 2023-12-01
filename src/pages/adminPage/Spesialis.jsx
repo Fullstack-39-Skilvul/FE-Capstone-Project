@@ -6,27 +6,39 @@ import {
   getDataSpesialisasi,
   updateDataSpesialisasi,
 } from "../../redux/action/spesialisasiAction";
-import { Modal, Button } from "flowbite-react";
+import { Modal, Button, Spinner } from "flowbite-react";
+import { Toaster } from "react-hot-toast";
 
 function Spesialis() {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [editSpesialisasi, setEditSpesialisasi] = useState("");
   const [newSpesialisasi, setNewSpesialisasi] = useState({
     namaSpesialisasi: "",
   });
   const { isLoading, spesialisasis } = useSelector((state) => state.spesialis);
 
-  console.log(spesialisasis.data);
-
   useEffect(() => {
     dispatch(getDataSpesialisasi());
   }, [dispatch]);
 
+  const handleSearch = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const filteredSpesialis = spesialisasis.data?.filter((item) =>
+    Object.values(item).some(
+      (value) =>
+        typeof value === "string" &&
+        value.toLowerCase().includes(searchKeyword.toLowerCase())
+    )
+  );
+
   const handleCreate = (e) => {
     e.preventDefault();
     dispatch(createDataSpesialisasi(newSpesialisasi));
-    console.log({ newSpesialisasi });
     setNewSpesialisasi({
       namaSpesialisasi: "",
     });
@@ -55,13 +67,19 @@ function Spesialis() {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
-    await dispatch(deleteDataSpesialisasi(id));
+    setOpenModalDelete(true);
+    setEditSpesialisasi(id);
+  };
+
+  const handleAcceptDelete = async () => {
+    await dispatch(deleteDataSpesialisasi(editSpesialisasi));
     dispatch(getDataSpesialisasi());
+    setOpenModalDelete(false);
   };
 
   return (
     <div>
+      <Toaster />
       <div className="text-sky-500 font-semibold text-2xl">Data Spesialis</div>
       <div>
         <div className="flex justify-between items-center mt-5">
@@ -92,55 +110,60 @@ function Spesialis() {
             className="border h-8 rounded text-sm"
             type="search"
             placeholder="Cari"
+            value={searchKeyword}
+            onChange={handleSearch}
           />
         </div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-          <table className=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                {/* <th scope="col" className="px-6 py-3">
-                  No
-                </th> */}
-                <th scope="col" className="px-6 py-3">
-                  Nama Spesialisasi
-                </th>
-                <th scope="col" className="px-6 py-3 justify-end flex">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {spesialisasis.data?.map((item) => (
-                <tr
-                  key={item._id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                >
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {item.namaSpesialisasi}
+          {isLoading ? (
+            <div className=" text-center overflow-hidden py-10 flex justify-center items-center">
+              <Spinner />
+            </div>
+          ) : (
+            <table className=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Nama Spesialisasi
                   </th>
-                  <td className="px-6 py-4 justify-end gap-2 flex items-center">
-                    <a
-                      onClick={() => handleEdit(item._id)}
-                      href="#"
-                      className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
-                    >
-                      Update
-                    </a>
-                    <a
-                      onClick={() => handleDelete(item._id)}
-                      href="#"
-                      className="font-medium bg-red-400 text-white py-1 px-2 rounded-lg"
-                    >
-                      Delete
-                    </a>
-                  </td>
+                  <th scope="col" className="px-6 py-3 justify-end flex">
+                    Action
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredSpesialis?.map((item) => (
+                  <tr
+                    key={item._id}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                  >
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {item.namaSpesialisasi}
+                    </th>
+                    <td className="px-6 py-4 justify-end gap-2 flex items-center">
+                      <a
+                        onClick={() => handleEdit(item._id)}
+                        href="#"
+                        className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
+                      >
+                        Update
+                      </a>
+                      <a
+                        onClick={() => handleDelete(item._id)}
+                        href="#"
+                        className="font-medium bg-red-400 text-white py-1 px-2 rounded-lg"
+                      >
+                        Delete
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* modal */}
@@ -164,13 +187,36 @@ function Spesialis() {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={handleEditAccept}>I accept</Button>
+            <Button className="bg-sky-500" onClick={handleEditAccept}>
+              Update
+            </Button>
             <Button color="gray" onClick={() => setOpenModal(false)}>
               Decline
             </Button>
           </Modal.Footer>
         </Modal>
         {/* akhir modal */}
+
+        <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
+          <Modal.Header>Hapus Data Pasien</Modal.Header>
+          <Modal.Body>
+            <p>Apakah Anda yakin ingin menghapus data pasien ini?</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="bg-red-500 text-white"
+              onClick={handleAcceptDelete}
+            >
+              Ya, Hapus
+            </Button>
+            <Button
+              className="bg-sky-500"
+              onClick={() => setOpenModalDelete(false)}
+            >
+              Batal
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const fetchPasienRequest = () => ({
   type: "GET_DATA_PASIEN",
@@ -73,8 +74,10 @@ export const updateDataPasien = (_id, newValues) => {
         config
       );
       dispatch(updatePasienSuccess(response.data));
+      toast.success("Data berhasil diperbarui !");
     } catch (error) {
       dispatch(updatePasienFailure(error.message));
+      toast.error("Data gagal di perbarui!");
     }
   };
 };
@@ -88,8 +91,10 @@ export const deleteDataPasien = (id) => {
         config
       );
       dispatch(deletePasienSuccess(id));
+      toast.success("Data berhasil dihapus !");
     } catch (error) {
       dispatch(deletePasienFailure(error.message));
+      toast.success("Data gagal dihapus !");
     }
   };
 };
