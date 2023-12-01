@@ -8,6 +8,7 @@ import RegisterPage from "../pages/registerPage/RegisterPage";
 import DetailKonselor from "./layout/DetailPage";
 import KonselorPage from "./layout/Konselor";
 import JadwalPage from "./layout/JadwalPage";
+import Payment from "./layout/Payment";
 
 
 function RouterManagement() {
@@ -23,6 +24,8 @@ function RouterManagement() {
           <Route path="/admin/*" element={<AdminPageLayout />} />
           <Route path="/konselor/*" element={<KonselorPage />} />
           <Route path="/booking/*" element={<JadwalPage />} />
+          <Route path="/payment/*" element={<Payment/>} />
+
         </Routes>
       </Suspense>
     </div>

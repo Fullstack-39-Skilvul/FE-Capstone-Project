@@ -88,21 +88,21 @@ const JamKonseling = ({ jam, tanggal, setJam, setTanggal }) => {
                                 <button
                                     type="button"
                                     onClick={() => handleTimeChange('08.00 - 08.45')}
-                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg w-full bg-white hover:bg-gray-100 hover:text-gray-700 border border-[#4898FF]"
+                                    className="block px-4 py-2 text-sm text-gray-700 rounded-lg w-full  hover:bg-blue-800 bg-white hover:text-gray-100 border border-[#4898FF]"
                                 >
                                     08.00 - 08.45
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => handleTimeChange('09.00 - 09.45')}
-                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg w-full bg-white hover:bg-gray-100 hover:text-gray-700 border border-[#4898FF]"
+                                    className="block px-4 py-2 text-sm text-gray-700 rounded-lg w-full  hover:bg-blue-800 bg-white hover:text-gray-100 border border-[#4898FF]"
                                 >
                                     09.00 - 09.45
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => handleTimeChange('10.00 - 10.45')}
-                                    className="block px-4 py-2 text-sm text-gray-500 rounded-lg w-full bg-white hover:bg-gray-100 hover:text-gray-700 border border-[#4898FF]"
+                                    className="block px-4 py-2 text-sm text-gray-700 rounded-lg w-full  hover:bg-blue-800 bg-white hover:text-gray-100 border border-[#4898FF]"
                                 >
                                     10.00 - 10.45
                                 </button>
