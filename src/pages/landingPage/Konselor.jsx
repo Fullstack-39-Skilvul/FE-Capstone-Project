@@ -8,7 +8,7 @@ function Konselor() {
   const dispatch = useDispatch();
   const { isLoading, konselors } = useSelector((state) => state.dataKonselor);
 
-  console.log(konselors.data);
+  // console.log(konselors.data);
   useEffect(() => {
     dispatch(getDataKonselor());
   }, [dispatch]);
