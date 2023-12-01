@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Envelope,
   FacebookLogo,
@@ -10,8 +10,27 @@ import {
   PushPin,
 } from "phosphor-react";
 import NavbarComponent from "../../components/navbar/Navbar";
+import emailjs from '@emailjs/browser';
 
 function ContactPage() {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      'service_nr5o9pu', 
+      'template_bgl43gc', 
+      form.current, 
+      'BSriv1OogSIKUvnHc')
+      .then((result) => {
+          console.log(result.text);
+          console.log('message sent')
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
+  
   return (
     <div id="contact">
       <NavbarComponent />
@@ -30,7 +49,7 @@ function ContactPage() {
             <div className="text-sky-500 text-2xl mb-5 font-semibold flex items-center gap-2">
               Send Us A Message <Envelope size={30} />
             </div>
-            <form action="" className="flex flex-col">
+            <form action="" className="flex flex-col" ref={form} onSubmit={sendEmail}>
               <label htmlFor="name" className="mb-1">
                 Your Name
               </label>
@@ -40,6 +59,7 @@ function ContactPage() {
                 name=""
                 id=""
                 placeholder="Input Your Name"
+                name="user_name"
               />
 
               <label htmlFor="email" className="mb-1 mt-5">
@@ -51,6 +71,7 @@ function ContactPage() {
                 name=""
                 id=""
                 placeholder="Input Your Email"
+                name="user_email"
               />
 
               <label htmlFor="phone" className="mb-1 mt-5">
@@ -62,6 +83,7 @@ function ContactPage() {
                 name=""
                 id=""
                 placeholder="Input Your Number"
+                name="phone"
               />
 
               <label htmlFor="message" className="mb-1 mt-5">
@@ -73,6 +95,7 @@ function ContactPage() {
                 id=""
                 placeholder="Input Your Message"
                 rows="5"
+                name="message"
               ></textarea>
               <button className="mt-5 text-sky-500 flex items-center justify-end">
                 <PaperPlaneTilt size={40} weight="fill" />
