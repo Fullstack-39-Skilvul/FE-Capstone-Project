@@ -22,7 +22,7 @@ function Sidebar() {
       <div className="pl-3">
         <ul className="gap-4 flex flex-col">
           {DATA_MENU.map((item) => (
-            <NavLink to={item.link}>
+            <NavLink key={item.id} to={item.link}>
               <li className="flex items-center gap-2 hover:bg-sky-400 hover:text-white py-1 rounded pl-2  mr-2">
                 {item.icon} {item.menu}
               </li>

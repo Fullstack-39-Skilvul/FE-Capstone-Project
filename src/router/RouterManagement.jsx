@@ -6,6 +6,7 @@ import ContactPage from "../pages/contactPage/ContactPage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import DetailKonselor from "./layout/DetailPage";
+import PenjadwalanPage from "../pages/PenjadwalanPage/PenjadwalanPage";
 
 function RouterManagement() {
   return (
@@ -14,6 +15,7 @@ function RouterManagement() {
         <Routes>
           <Route path="/*" element={<LandingPageLayout />} />
           <Route path="/detailkonselor" element={<DetailKonselor />} />
+          <Route path="/penjadwalan" element={<PenjadwalanPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
