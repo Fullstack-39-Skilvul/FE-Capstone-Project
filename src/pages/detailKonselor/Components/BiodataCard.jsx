@@ -17,9 +17,12 @@ const BiodataCard = () => {
 
     // Ambil data dari localStorage
     const storedBooking = localStorage.getItem(`metode`);
+    const storedUserId = localStorage.getItem(`userId`);
     const localStorageBooking = storedBooking ? JSON.parse(storedBooking) : null;
+    const localStorageUserId = storedUserId ? JSON.parse(storedUserId) : null;
 
     const jenisId = localStorageBooking? localStorageBooking.id : null;
+    const userId = localStorageUserId? localStorageUserId.id : null;
 
 
     const submitHandler = async (e) => {
@@ -32,7 +35,7 @@ const BiodataCard = () => {
             {
                 tanggal: tanggal,
                 waktu: jam,
-                pasien: "65640d96223d7d39596ad5d2",
+                pasien: userId,
                 konselor: id,
                 jenisKonseling: jenisId, // Tidak perlu mengatur jenisId di sini
             }
@@ -47,7 +50,7 @@ const BiodataCard = () => {
             const bookingData = {
                 tanggal: tanggal,
                 waktu: jam,
-                pasien: "65640d96223d7d39596ad5d2", 
+                pasien: userId, 
                 konselor: id, 
                 jenisKonseling: jenisId, 
             };

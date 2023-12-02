@@ -117,7 +117,7 @@ function Media() {
                       Konseling Offline
                     </h3>
                     <div className="flex justify-center gap-4">
-                      <Button color="failure" onClick={() => handleIdjenis("6568b0ef7b25667391be0d01")}>
+                      <Button color="blue" onClick={() => handleIdjenis("6568b0ef7b25667391be0d01")}>
                         {"Bandung"}
                       </Button>
                       <Button color="gray" onClick={() => handleIdjenis("6568be9c8cb39b642e44c69d")}>
@@ -165,7 +165,7 @@ function Media() {
                 <Modal.Header />
                 <Modal.Body>
                   <div className="text-center">
-                    <Circle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                    {/* <Circle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" /> */}
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                       Konseling Online
                     </h3>
