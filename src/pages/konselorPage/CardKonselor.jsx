@@ -34,7 +34,7 @@ const CardKonselor = () => {
     return (
         <>
 
-            <div>
+            <div className='flex flex-wrap justify-center'>
                 {
                     konselor ? (
                         konselor.map((item) => {
