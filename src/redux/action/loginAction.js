@@ -4,7 +4,7 @@ import axios from "axios";
 export const loginSuccess = (userData) => {
   // Simpan token dan userId ke dalam localStorage
   localStorage.setItem("token", userData.token);
-  localStorage.setItem("userId", JSON.stringify({id: userData.userId}));
+  localStorage.setItem("userId", userData.userId);
 
   return {
     type: "LOGIN_SUCCESS",

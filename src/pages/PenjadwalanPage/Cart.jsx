@@ -7,6 +7,7 @@ const Card = () => {
     const { idbooking } = useParams()
 
     const [booking, setBooking] = useState(null)
+    const token = localStorage.getItem(`token`);
 
 
 
@@ -15,8 +16,8 @@ const Card = () => {
       try {
           const res = await axios.get('https://be-capstone-project.vercel.app/bookings/' + idbooking, {
               headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'token ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQxMjUwNzI3YjE0MWQ0M2NlNWM4MyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAxMDY2NzMxfQ.d9ADnKK-sYhF1HvlfzF8mVdGfQPR9xb987m707OD-zM',
+                //   'Content-Type': 'application/json',
+                  'Authorization': 'token ' + token,
               }
           });
 
