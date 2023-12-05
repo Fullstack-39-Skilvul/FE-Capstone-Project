@@ -155,16 +155,17 @@ function Profil() {
           <Spinner />
         </div>
       ) : (
-        <div className="flex gap-20 justify-center mt-10">
-          <div className="w-40 rounded-full h-40 object-cover">
+        <div className="relative max-h-80 border overflow-x-auto p-10 shadow-md sm:rounded-lg mt-5">
+          <div className=" w-49 h-40 object-cover mb-[150px]">
             {konselors.avatar ? (
-              <div>
+              <div className="flex justify-center flex-col items-center ">
                 <img
-                  className="object-cover rounded-full w-40 h-40"
+                  className="border object-cover rounded-full w-40 h-40"
                   src={konselors.avatar}
                   alt="Avatar"
                 />
-                <div className="text-center text-sm">
+                <div className=" text-sm mt-5 border w-full p-5 rounded">
+                  <div className="font-semibold text-sky-500 text-lg">Bio</div>
                   <p>{konselors.bio ? konselors.bio : "konselor"}</p>
                 </div>
               </div>
@@ -172,24 +173,12 @@ function Profil() {
               <User />
             )}
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-10">
             <div className="flex gap-20">
               <label htmlFor="nama" className=" w-40">
                 Nama
               </label>
               <p>{konselors.nama ? konselors.nama : "konselor"}</p>
-            </div>
-            <div className="flex gap-20">
-              <label htmlFor="bio" className=" w-40">
-                Bio
-              </label>
-              <textarea
-                className="rounded border border-gray-400"
-                cols={20}
-                rows={2}
-                value={konselors.bio ? konselors.bio : "konselor"}
-                disabled
-              />
             </div>
             <div className="flex gap-20">
               <label htmlFor="motivasi" className=" w-40">

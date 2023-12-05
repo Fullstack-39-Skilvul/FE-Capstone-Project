@@ -8,6 +8,7 @@ import {
 import dayjs from "dayjs";
 import { Button, Modal, Spinner } from "flowbite-react";
 import { Toaster } from "react-hot-toast";
+import { loginSuccess } from "../../redux/action/loginAction";
 
 const Payment = () => {
   const dispatch = useDispatch();
@@ -21,25 +22,46 @@ const Payment = () => {
     statusBooking: "Confirmed",
   });
 
-  console.log(payments.data);
   useEffect(() => {
-    dispatch(getDataPayment());
+    const fetchData = async () => {
+      const userData = {
+        token: localStorage.getItem("token"),
+        userId: localStorage.getItem("userId"),
+      };
+      if (userData.token && userData.userId) {
+        dispatch(loginSuccess(userData));
+      }
+      dispatch(getDataPayment());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   const handleSearch = (e) => {
     setSearchKeyword(e.target.value);
   };
 
-  const filteredPayments = payments.data?.filter((item) =>
-    Object.values(item).some(
+  const filteredPayments = payments.data?.filter((item) => {
+    const bookingInfo = item.dataBooking[0];
+    const bookingSearchCriteria = [
+      bookingInfo?.jenisKonseling?.jenis,
+      bookingInfo?.pasien.namaPasien,
+      bookingInfo?.konselor.nama,
+      item.metodePembayaran,
+      dayjs(item.tanggalBayar).format("DD-MM-YYYY"),
+      bookingInfo?.status,
+    ];
+
+    return bookingSearchCriteria.some(
       (value) =>
         typeof value === "string" &&
         value.toLowerCase().includes(searchKeyword.toLowerCase())
-    )
-  );
+    );
+  });
 
   const handleUpdate = async (id) => {
     setEditPayment(id);
+    setIsEdit(true);
     setOpenModalDelete(true);
   };
 
@@ -51,6 +73,7 @@ const Payment = () => {
 
   const handleDelete = async (id) => {
     setEditPayment(id);
+    setIsEdit(false);
     setOpenModalDelete(true);
   };
 
@@ -81,7 +104,7 @@ const Payment = () => {
               <Spinner />
             </div>
           ) : (
-            <table className=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs sticky top-0 z-10 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
@@ -113,22 +136,35 @@ const Payment = () => {
                     key={item._id}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
+                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {item.dataBooking[0]?.pasien.namaPasien}
-                    </th>
+                    </td>
                     <td className="px-6 py-4">
                       {item.dataBooking[0]?.konselor.nama}
                     </td>
                     <td className="px-6 py-4">{item.metodePembayaran}</td>
-                    {dayjs(item.tanggalBayar).format("DD-MM-YYYY")}
+                    <td className="px-6 py-4">
+                      {dayjs(item.tanggalBayar).format("DD-MM-YYYY")}
+                    </td>
                     <td className="px-6 py-4">
                       {item.dataBooking[0]?.jenisKonseling?.jenis}
                     </td>
-                    <td className="px-6 py-4">{item.statusPembayaran}</td>
-                    <td className="px-6 py-10 gap-2 flex items-center">
+                    <td className="px-6 py-4">
+                      <div
+                        className={`${
+                          item.statusPembayaran === "Pending"
+                            ? "bg-red-100 text-center text-red-400 border border-red-400 rounded px-1"
+                            : item.statusPembayaran === "Confirmed"
+                            ? "bg-sky-100 text-center text-sky-400 border border-sky-400 rounded px-1"
+                            : item.statusPembayaran === "Dimulai"
+                            ? "bg-yellow-100 text-center text-yellow-400 border border-yellow-400 rounded"
+                            : "bg-green-100 text-center text-green-400 border border-green-400 rounded"
+                        }`}
+                      >
+                        {item.statusPembayaran}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 gap-2 flex items-center">
                       <a
                         onClick={() => handleUpdate(item._id)}
                         href="#"
@@ -151,38 +187,56 @@ const Payment = () => {
           )}
         </div>
 
-        {/* modal for delete/update confirmation */}
-        <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
-          <Modal.Header>
-            {handleAcceptUpdate ? "Update Data Payment" : "Hapus Data Payment"}
-          </Modal.Header>
+        {/* modal for update confirmation */}
+        <Modal
+          show={openModalDelete && isEdit}
+          onClose={() => setOpenModalDelete(false)}
+        >
+          <Modal.Header>Update Data Payment</Modal.Header>
           <Modal.Body>
-            <p>
-              {handleAcceptUpdate
-                ? "Apakah Anda yakin ingin mengupdate data payment ini?"
-                : "Apakah Anda yakin ingin menghapus data payment ini?"}
-            </p>
+            <p>Are you sure you want to update this payment data?</p>
           </Modal.Body>
           <Modal.Footer>
             <Button
-              className={`${
-                handleAcceptUpdate ? "bg-sky-500" : "bg-red-500"
-              } text-white`}
-              onClick={
-                handleAcceptUpdate ? handleAcceptUpdate : handleAcceptDelete
-              }
+              className="bg-sky-500 text-white"
+              onClick={handleAcceptUpdate}
             >
-              {handleAcceptUpdate ? "Ya, Update" : "Ya, Hapus"}
+              Yes, Update
             </Button>
             <Button
               className="bg-sky-500"
               onClick={() => setOpenModalDelete(false)}
             >
-              Batal
+              Cancel
             </Button>
           </Modal.Footer>
         </Modal>
-        {/* akhir modal delete/update */}
+
+        {/* modal for delete confirmation */}
+        <Modal
+          show={openModalDelete && !isEdit}
+          onClose={() => setOpenModalDelete(false)}
+        >
+          <Modal.Header>Hapus Data Payment</Modal.Header>
+          <Modal.Body>
+            <p>Are you sure you want to delete this payment data?</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="bg-red-500 text-white"
+              onClick={handleAcceptDelete}
+            >
+              Yes, Delete
+            </Button>
+            <Button
+              className="bg-sky-500"
+              onClick={() => setOpenModalDelete(false)}
+            >
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* end of delete/update modal */}
       </div>
     </div>
   );

@@ -31,9 +31,15 @@ export const loginUser = (loginData) => async (dispatch) => {
       "https://be-capstone-project.vercel.app/auth/login",
       loginData
     );
-    const userData = response.data;
 
-    dispatch(loginSuccess(userData));
+    // Pastikan respons memiliki properti 'token'
+    if (response.data && response.data.token) {
+      const userData = response.data;
+      dispatch(loginSuccess(userData));
+    } else {
+      // Tanggapi jika token tidak ditemukan dalam respons
+      dispatch(loginFailure("Token not found in response"));
+    }
   } catch (error) {
     dispatch(loginFailure(error.message));
   }

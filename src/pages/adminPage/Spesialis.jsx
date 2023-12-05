@@ -8,6 +8,7 @@ import {
 } from "../../redux/action/spesialisasiAction";
 import { Modal, Button, Spinner } from "flowbite-react";
 import { Toaster } from "react-hot-toast";
+import { loginSuccess } from "../../redux/action/loginAction";
 
 function Spesialis() {
   const dispatch = useDispatch();
@@ -18,10 +19,27 @@ function Spesialis() {
   const [newSpesialisasi, setNewSpesialisasi] = useState({
     namaSpesialisasi: "",
   });
+
+  // State untuk melacak kesalahan pada input
+  const [errors, setErrors] = useState({
+    namaSpesialisasi: "",
+  });
+
   const { isLoading, spesialisasis } = useSelector((state) => state.spesialis);
 
   useEffect(() => {
-    dispatch(getDataSpesialisasi());
+    const fetchData = async () => {
+      const userData = {
+        token: localStorage.getItem("token"),
+        userId: localStorage.getItem("userId"),
+      };
+      if (userData.token && userData.userId) {
+        dispatch(loginSuccess(userData));
+      }
+      dispatch(getDataSpesialisasi());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -38,6 +56,20 @@ function Spesialis() {
 
   const handleCreate = (e) => {
     e.preventDefault();
+
+    // Validasi
+    const newErrors = {};
+    if (!newSpesialisasi.namaSpesialisasi) {
+      newErrors.namaSpesialisasi = "Harap isi nama spesialisasi";
+    }
+
+    setErrors(newErrors);
+
+    // Jika terdapat kesalahan, hentikan penyimpanan data
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
     dispatch(createDataSpesialisasi(newSpesialisasi));
     setNewSpesialisasi({
       namaSpesialisasi: "",
@@ -58,6 +90,19 @@ function Spesialis() {
   };
 
   const handleEditAccept = async () => {
+    // Validasi
+    const newErrors = {};
+    if (!newSpesialisasi.namaSpesialisasi) {
+      newErrors.namaSpesialisasi = "Harap isi nama spesialisasi";
+    }
+
+    setErrors(newErrors);
+
+    // Jika terdapat kesalahan, hentikan penyimpanan data
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
     await dispatch(
       updateDataSpesialisasi(editSpesialisasi._id, newSpesialisasi)
     );
@@ -86,7 +131,9 @@ function Spesialis() {
           <div>
             <form action="" className="gap-2 flex">
               <input
-                className="border h-8 rounded text-sm"
+                className={`border h-8 rounded text-sm ${
+                  errors.namaSpesialisasi ? "border-red-500" : ""
+                }`}
                 type="search"
                 placeholder="Input spesialis"
                 value={newSpesialisasi.namaSpesialisasi}
@@ -105,6 +152,9 @@ function Spesialis() {
                 Tambah data
               </button>
             </form>
+            {errors.namaSpesialisasi && (
+              <p className="text-red-500 text-sm">{errors.namaSpesialisasi}</p>
+            )}
           </div>
           <input
             className="border h-8 rounded text-sm"
@@ -173,7 +223,9 @@ function Spesialis() {
             <form action="" className="flex flex-col text-sm gap-2">
               <label htmlFor="nama">Nama Spesialisasi</label>
               <input
-                className="border rounded-lg"
+                className={`border rounded-lg ${
+                  errors.namaSpesialisasi ? "border-red-500" : ""
+                }`}
                 type="text"
                 placeholder="Nama Spesialisasi"
                 value={newSpesialisasi.namaSpesialisasi}
@@ -184,6 +236,11 @@ function Spesialis() {
                   })
                 }
               />
+              {errors.namaSpesialisasi && (
+                <p className="text-red-500 text-sm">
+                  {errors.namaSpesialisasi}
+                </p>
+              )}
             </form>
           </Modal.Body>
           <Modal.Footer>

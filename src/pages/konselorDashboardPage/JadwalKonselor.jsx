@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { Button, Modal, Spinner } from "flowbite-react";
 import { Toaster } from "react-hot-toast";
-import {
-  getDataKonselorById,
-  getJadwalKonselor,
-} from "../../redux/action/konselorAction";
+import { getJadwalKonselor } from "../../redux/action/konselorAction";
 import { updateDataBooking } from "../../redux/action/bookingAdminAction";
 
 function JadwalKonselor() {
@@ -22,7 +19,7 @@ function JadwalKonselor() {
     dispatch(getJadwalKonselor());
   }, [dispatch]);
 
-  console.log(konselors);
+  console.log("dari jadwal", konselors);
 
   const handleSearch = (e) => {
     setSearchKeyword(e.target.value);
