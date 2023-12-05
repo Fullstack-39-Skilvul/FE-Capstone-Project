@@ -19,8 +19,8 @@ function RouterManagement() {
           <Route path="/*" element={<LandingPageLayout />} />
           <Route path="/detailkonselor/*" element={<DetailKonselor />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/login/*" element={<LoginPage />} />
-          <Route path="/register/*" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin/*" element={<AdminPageLayout />} />
           <Route path="/konselorDashboard/*" element={<KonselorPageLayout />} />
           <Route path="/konselor/*" element={<KonselorPage />} />
