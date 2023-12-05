@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import Spesifikasi from "./Spesifikasi";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import JamKonseling from "./JamKonseling";
 import axios from "axios";
+// import DateKonselor from './DateKonselor'
 
 const BiodataCard = () => {
   const { id } = useParams();
@@ -12,45 +14,40 @@ const BiodataCard = () => {
   const [konselor, setKonselor] = useState(null);
   const [bookingId, setBookingId] = useState(null);
 
-  useEffect(() => {
-    getKonselor();
-  }, []);
+  // Ambil data dari localStorage
+  const storedBooking = localStorage.getItem(`metode`);
+  const storedUserId = localStorage.getItem(`userId`) || null;
+  const token = localStorage.getItem(`token`) || null;
+  const localStorageBooking = storedBooking ? JSON.parse(storedBooking) : null;
+  // const localStorageUserId = storedUserId || null;
 
-  const getKonselor = async () => {
-    try {
-      const token = localStorage.getItem("token");
+  const jenisId = localStorageBooking ? localStorageBooking.id : null;
 
-      const res = await axios.get(
-        `https://be-capstone-project.vercel.app/konselors/` + id,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "token " + token,
-          },
-        }
-      );
-
-      setKonselor(res.data);
-    } catch (error) {
-      console.error(error);
-      // Handle the error
-    }
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    console.log({
+      jam: jam,
+      tanggal: tanggal,
+    });
+    console.log({
+      tanggal: tanggal,
+      waktu: jam,
+      pasien: storedUserId,
+      konselor: id,
+      jenisKonseling: jenisId, // Tidak perlu mengatur jenisId di sini
+    });
+    submitbutton();
   };
 
   const submitbutton = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("userId");
-      const jenisId = localStorage.getItem("metode");
-      // Ubah bagian ini
-      const jenisKonselingId = jenisId.id;
       // Persiapkan data booking yang sesuai
       const bookingData = {
         tanggal: tanggal,
         waktu: jam,
-        pasien: userId,
+        pasien: storedUserId,
         konselor: id,
-        jenisKonseling: jenisKonselingId,
+        jenisKonseling: jenisId,
       };
 
       // Kirim data booking ke API
@@ -74,14 +71,37 @@ const BiodataCard = () => {
     }
   };
 
+  // ambil data konselor
+  async function getKonselor() {
+    try {
+      const res = await axios.get(
+        `https://be-capstone-project.vercel.app/konselors/` + id,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "token " + token,
+          },
+        }
+      );
+
+      setKonselor(res.data);
+    } catch (error) {
+      console.error(error);
+      // return error
+    }
+  }
+
+  useEffect(() => {
+    getKonselor();
+  }, []);
   return (
     <>
       <div>
         <div
-          className="flex max-sm:w-auto max-md:w-auto w-full flex-wrap p-8 m-5 md:w-[761px] bg-[#B5D5FE] shadow-gray-300 rounded-xl border border-[#0F2650]"
+          className="flex max-sm:w-auto max-md:w-auto w-full flex-wrap p-8 m-5 md:w-[761px] bg-[#B5D5FE] shadow-gray-300  rounded-xl border border-[#0F2650]"
           style={{ boxShadow: "18px 19px 14px -3px rgba(0,0,0,0.1)" }}
         >
-          <p className="mb-6 mx-3 text-sm w-full">
+          <p className=" mb-6 mx-3 text-sm w-full ">
             {konselor ? konselor.bio : "Loading..."}
           </p>
           <p className="flex w-full mb-4 justify-center text-center rounded-3xl bg-[#ffdb38cd] font-bold text-md px-8 py-4">
@@ -94,12 +114,14 @@ const BiodataCard = () => {
               jam={jam}
               setTanggal={setTanggal}
             />
+            {/* <DateKonselor /> */}
           </div>
+
           <div className="flex justify-end w-full mt-6">
             <Link
               className="flex p-2 px-4 bg-[#063D82] hover:bg-blue-700 hover:border-b hover:border-[#063D82] text-white text-sm rounded-2xl"
               to={`/booking/${bookingId}`}
-              onClick={submitbutton}
+              onClick={submitHandler}
             >
               Booking Now
             </Link>
