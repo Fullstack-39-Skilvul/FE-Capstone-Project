@@ -1,62 +1,61 @@
 const initialValue = {
-  konselors: [],
+  jadwals: [],
   isLoading: false,
   error: "",
 };
 
-export const konselorReducer = (state = initialValue, action) => {
+export const jadwalReducer = (state = initialValue, action) => {
   switch (action.type) {
-    case "GET_DATA_KONSELOR":
+    case "GET_DATA_JADWAL":
       return {
         ...state,
         isLoading: true,
       };
-    case "SUCCESS_GET_DATA_KONSELOR":
+    case "SUCCESS_GET_DATA_JADWAL":
       return {
         ...state,
         isLoading: false,
-        konselors: action.payload,
+        jadwals: action.payload,
       };
-    case "FETCH_KONSELOR_FAILURE":
+    case "FETCH_JADWAL_FAILURE":
       return {
         ...state,
         isLoading: false,
         error: action.payload,
       };
-    case "UPDATE_DATA_KONSELOR":
+    case "UPDATE_DATA_JADWAL":
       return {
         ...state,
         isLoading: true,
       };
-    case "SUCCESS_UPDATE_DATA_KONSELOR":
+    case "SUCCESS_UPDATE_DATA_JADWAL":
       return {
         ...state,
         isLoading: false,
-        konselors: (state.konselors?.data || []).map((konselor) =>
-          konselor._id === action.payload._id ? action.payload : konselor
+        jadwals: state.jadwals.data?.map((jadwal) =>
+          jadwal._id === action.payload._id ? action.payload : jadwal
         ),
       };
-
-    case "FAILURE_UPDATE_DATA_KONSELOR":
+    case "FAILURE_UPDATE_DATA_JADWAL":
       return {
         ...state,
         isLoading: false,
         error: action.payload,
       };
-    case "DELETE_DATA_KONSELOR":
+    case "DELETE_DATA_JADWAL":
       return {
         ...state,
         isLoading: true,
       };
-    case "SUCCESS_DELETE_DATA_KONSELOR":
+    case "SUCCESS_DELETE_DATA_JADWAL":
       return {
         ...state,
         isLoading: false,
-        konselors: state.konselors?.data.filter(
-          (konselor) => konselor._id !== action.payload
+        jadwals: state.jadwals.data?.filter(
+          (jadwal) => jadwal._id !== action.payload
         ),
       };
-    case "FAILURE_DELETE_DATA_KONSELOR":
+    case "FAILURE_DELETE_DATA_JADWAL":
       return {
         ...state,
         isLoading: false,

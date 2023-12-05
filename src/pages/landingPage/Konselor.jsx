@@ -31,13 +31,17 @@ function Konselor() {
         {konselors.data?.map((item) => (
           <div className="shadow border rounded-xl mt-10 w-64">
             <div className="">
-              <img className="h-60 max-w-[100%]" src={item.avatar} alt="" />
+              <img
+                className="h-60 max-w-[100%] object-cover"
+                src={item.avatar}
+                alt=""
+              />
             </div>
-            <div className="bg-gray-100 rounded-t-xl p-4">
+            <div className="bg-gray-100 h-24 rounded-t-xl p-4">
               <div className="font-bold text-blue-950">{item.nama}</div>
               {item.spesialisasi?.map((spesialisasiItem) => (
                 <div
-                  className=" font-semibold text-gray-600"
+                  className=" font-semibold text-gray-600 text-sm"
                   key={spesialisasiItem._id}
                 >
                   Spesialis {spesialisasiItem.namaSpesialisasi}

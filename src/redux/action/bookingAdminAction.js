@@ -89,6 +89,7 @@ export const updateDataBooking = (id, newValues) => {
     } catch (error) {
       dispatch(updateBookingFailure(error.message));
       toast.error("Gagal memperbarui data !");
+      console.log(error);
     }
   };
 };

@@ -32,10 +32,17 @@ export const bookingReducer = (state = initialValue, action) => {
       return {
         ...state,
         isLoading: false,
-        bookings: state.bookings.data?.map((booking) =>
-          booking._id === action.payload._id ? action.payload : booking
-        ),
+        bookings:
+          state.bookings && state.bookings.data
+            ? {
+                ...state.bookings,
+                data: state.bookings.data.map((booking) =>
+                  booking._id === action.payload._id ? action.payload : booking
+                ),
+              }
+            : state.bookings,
       };
+
     case "FAILURE_UPDATE_DATA_BOOKING":
       return {
         ...state,

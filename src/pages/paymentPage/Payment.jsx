@@ -8,25 +8,20 @@ import { useParams } from "react-router-dom";
 function Payment() {
   const { idbooking } = useParams();
 
-  const [selectedBank, setSelectedBank] = useState('');
-  const [booking, setBooking] = useState('');
+  const [selectedBank, setSelectedBank] = useState("");
+  const [booking, setBooking] = useState("");
   const token = localStorage.getItem(`token`) || null;
-
 
   const handleBankChange = (event) => {
     setSelectedBank(event.target.value);
-
   };
-
-
-
 
   const handlePaymentProofSubmit = async () => {
     try {
       // Persiapkan data booking yang sesuai
       const bookingData = {
         metodePembayaran: selectedBank,
-        tanggalBayar: new Date().toISOString().split('T')[0],
+        tanggalBayar: new Date().toISOString().split("T")[0],
         dataBooking: idbooking,
       };
 
@@ -37,24 +32,21 @@ function Payment() {
         {
           headers: {
             // 'Content-Type': 'application/json',
-            'Authorization':
-              'token '+ token,
+            Authorization: "token " + token,
           },
         }
       );
 
       // console.log(selectedBank)
-      console.log('Data berhasil ditambahkan:', res.data);
+      console.log("Data berhasil ditambahkan:", res.data);
       // console.log('Data berhasil ditambahkan:', res.data._id)
 
       openWhatsApp();
 
       // navigation(`/booking/${res.data.id}`);
-
     } catch (error) {
-      console.error('Error saat menambahkan data:', error.message);
+      console.error("Error saat menambahkan data:", error.message);
     }
-
   };
 
   async function getBooking() {
@@ -64,8 +56,7 @@ function Payment() {
         {
           headers: {
             // 'Content-Type': 'application/json',
-            'Authorization':
-              'token ' + token,
+            Authorization: "token " + token,
           },
         }
       );
@@ -79,7 +70,7 @@ function Payment() {
 
   const openWhatsApp = () => {
     // Gantilah nomor WhatsApp dan pesan sesuai kebutuhan
-    const phoneNumber = '6285861617647';
+    const phoneNumber = "6285861617647";
     const message = `
     Halo mimin,
 
@@ -87,32 +78,34 @@ function Payment() {
     Berikut merupakan informasi pembayaran:
     
       - Metode Pembayaran: ${selectedBank}
-      - Tanggal Pembayaran: ${format(new Date(), 'dd MMMM yyyy')}
-      - Total Pembayaran: ${booking ? formatRupiah(booking.jenisKonseling.harga) : "loading.."}
+      - Tanggal Pembayaran: ${format(new Date(), "dd MMMM yyyy")}
+      - Total Pembayaran: ${
+        booking ? formatRupiah(booking.jenisKonseling.harga) : "loading.."
+      }
 
     Saya akan mengirim bukti pembayaran, mohon untuk segera diverifikasi. 
     Terima kasih.
   `;
 
     // Membuat tautan untuk membuka aplikasi WhatsApp
-    const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
+      message
+    )}`;
 
     // Mengarahkan ke tautan WhatsApp
     window.location.href = whatsappLink;
   };
 
-
   const formatRupiah = (number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR'
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
     }).format(number);
   };
 
   useEffect(() => {
     getBooking();
   }, []);
-
 
   return (
     <div className="flex flex-col  justify-center items-center">
@@ -125,15 +118,37 @@ function Payment() {
           <div className="p-10 w-96">
             <div>No rek :</div>
             <div className="flex justify-between shadow-xl border rounded-lg border-gray-200 px-3 py-2">
-              <select name="" id=""
+              <select
+                name=""
+                id=""
                 className="w-full rounded"
                 value={selectedBank}
                 onChange={handleBankChange}
               >
-                <option value="222-222-444-555 BRI" className="flex justify-between">222-222-444-555 BRI</option>
-                <option value="231-492-091-283 BCA" className="flex justify-between">231-492-091-283 BCA</option>
-                <option value="222-222-444-555 BNI" className="flex justify-between">222-222-444-555 BNI</option>
-                <option value="222-222-444-555 MANDIRI" className="flex justify-between">222-222-444-555 MANDIRI</option>
+                <option
+                  value="222-222-444-555 BRI"
+                  className="flex justify-between"
+                >
+                  222-222-444-555 BRI
+                </option>
+                <option
+                  value="231-492-091-283 BCA"
+                  className="flex justify-between"
+                >
+                  231-492-091-283 BCA
+                </option>
+                <option
+                  value="222-222-444-555 BNI"
+                  className="flex justify-between"
+                >
+                  222-222-444-555 BNI
+                </option>
+                <option
+                  value="222-222-444-555 MANDIRI"
+                  className="flex justify-between"
+                >
+                  222-222-444-555 MANDIRI
+                </option>
               </select>
             </div>
             <br />
@@ -144,7 +159,11 @@ function Payment() {
             <br />
             <div>Total Bayar :</div>
             <div className="flex justify-between shadow-xl border rounded-lg border-gray-200 px-3 py-2">
-              <p>{booking ? formatRupiah(booking.jenisKonseling.harga) : "loading.."}</p>
+              <p>
+                {booking
+                  ? formatRupiah(booking.jenisKonseling.harga)
+                  : "loading.."}
+              </p>
             </div>
           </div>
         </div>
@@ -161,8 +180,10 @@ function Payment() {
           </ol>
         </div>
 
-        <button className="flex gap-2 mt-10 items-center justify-center w-96 bg-sky-500 rounded-lg py-2 text-white"
-          onClick={handlePaymentProofSubmit}>
+        <button
+          className="flex gap-2 mt-10 items-center justify-center w-96 bg-sky-500 rounded-lg py-2 text-white"
+          onClick={handlePaymentProofSubmit}
+        >
           <div>Kirim Bukti Pembayaran</div>
           <WhatsappLogo size={20} />
         </button>
