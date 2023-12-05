@@ -52,20 +52,22 @@ function NavbarComponent() {
       <div className="flex gap-2 md:order-2">
         {!isLoggedIn ? (
           <>
-            <Button
-              type="button"
-              className="text-blue-800 hover:text-white border-2 border-blue-700 bg-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              href="/login"
-            >
-              Login
-            </Button>
-            <Button
-              type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              href="/register"
-            >
-              Sign Up
-            </Button>
+            <NavLink to="/login">
+              <Button
+                type="button"
+                className="text-blue-800 hover:text-white border-2 border-blue-700 bg-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Login
+              </Button>
+            </NavLink>
+            <NavLink to="/register">
+              <Button
+                type="button"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Sign Up
+              </Button>
+            </NavLink>
           </>
         ) : (
           <NavLink to="/login">
