@@ -5,7 +5,7 @@ import { Link } from "react-scroll";
 
 function Hero() {
   return (
-    <div>
+    <div id="home">
       <div className="bg-gradient-to-tr from-blue-700 to-blue-600 min-h-[100vh] px-10 md:px-20 md:pt-10 md:pb-0 flex flex-col-reverse md:items-center md:justify-around pt-16 gap-10 md:flex-row">
         <div className="text-white w-[100%]  text-center md:text-left pt-10 pb-10">
           <div className="text-2xl lg:text-5xl font-bold">

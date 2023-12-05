@@ -25,17 +25,7 @@ const BiodataCard = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log({
-      jam: jam,
-      tanggal: tanggal,
-    });
-    console.log({
-      tanggal: tanggal,
-      waktu: jam,
-      pasien: storedUserId,
-      konselor: id,
-      jenisKonseling: jenisId, // Tidak perlu mengatur jenisId di sini
-    });
+
     submitbutton();
   };
 

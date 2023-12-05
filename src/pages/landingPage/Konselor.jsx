@@ -27,7 +27,7 @@ function Konselor() {
           komprehensif dalam perjalanan kesehatan mental Anda.
         </p>
       </div>
-      <div className="flex gap-10">
+      <div className="flex gap-10 overflow-x-auto w-[100%]">
         {konselors.data?.map((item) => (
           <div className="shadow border rounded-xl mt-10 w-64">
             <div className="">
@@ -37,7 +37,7 @@ function Konselor() {
                 alt=""
               />
             </div>
-            <div className="bg-gray-100 h-24 rounded-t-xl p-4">
+            <div className="bg-gray-100 w-[200px] h-24 rounded-t-xl p-4">
               <div className="font-bold text-blue-950">{item.nama}</div>
               {item.spesialisasi?.map((spesialisasiItem) => (
                 <div

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { format } from "date-fns";
+import { Button, Modal } from "flowbite-react";
 import { WhatsappLogo } from "phosphor-react";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -10,6 +11,7 @@ function Payment() {
 
   const [selectedBank, setSelectedBank] = useState("");
   const [booking, setBooking] = useState("");
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const token = localStorage.getItem(`token`) || null;
 
   const handleBankChange = (event) => {
@@ -17,6 +19,11 @@ function Payment() {
   };
 
   const handlePaymentProofSubmit = async () => {
+    // Buka modal konfirmasi
+    setIsConfirmationModalOpen(true);
+  };
+
+  const confirmPaymentSubmission = async () => {
     try {
       // Persiapkan data booking yang sesuai
       const bookingData = {
@@ -31,21 +38,18 @@ function Payment() {
         bookingData,
         {
           headers: {
-            // 'Content-Type': 'application/json',
             Authorization: "token " + token,
           },
         }
       );
 
-      // console.log(selectedBank)
       console.log("Data berhasil ditambahkan:", res.data);
-      // console.log('Data berhasil ditambahkan:', res.data._id)
-
       openWhatsApp();
-
-      // navigation(`/booking/${res.data.id}`);
     } catch (error) {
       console.error("Error saat menambahkan data:", error.message);
+    } finally {
+      // Tutup modal konfirmasi
+      setIsConfirmationModalOpen(false);
     }
   };
 
@@ -93,7 +97,7 @@ function Payment() {
     )}`;
 
     // Mengarahkan ke tautan WhatsApp
-    window.location.href = whatsappLink;
+    window.open(whatsappLink, "_blank");
   };
 
   const formatRupiah = (number) => {
@@ -188,6 +192,30 @@ function Payment() {
           <WhatsappLogo size={20} />
         </button>
       </div>
+
+      <Modal
+        show={isConfirmationModalOpen}
+        onClose={() => setIsConfirmationModalOpen(false)}
+      >
+        <Modal.Header>Konfirmasi Pengiriman Bukti Pembayaran</Modal.Header>
+        <Modal.Body>
+          <p>Anda yakin ingin mengirim bukti pembayaran?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="bg-sky-500 text-white"
+            onClick={confirmPaymentSubmission}
+          >
+            Ya
+          </Button>
+          <Button
+            className="bg-gray-300"
+            onClick={() => setIsConfirmationModalOpen(false)}
+          >
+            Batal
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
