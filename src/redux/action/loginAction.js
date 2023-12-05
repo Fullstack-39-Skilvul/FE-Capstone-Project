@@ -18,10 +18,8 @@ export const loginFailure = (error) => ({
 });
 
 export const logout = () => {
-  // Hapus token dan userId dari localStorage saat logout
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
-
   return {
     type: "LOGOUT",
   };

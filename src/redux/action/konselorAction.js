@@ -75,6 +75,40 @@ export const getDataKonselor = () => {
   };
 };
 
+export const getDataKonselorById = () => {
+  return async (dispatch) => {
+    dispatch(fetchKonselorRequest());
+    const id = localStorage.getItem("userId");
+    try {
+      const response = await axios.get(
+        `https://be-capstone-project.vercel.app/konselors/${id}`,
+        axiosConfig
+      );
+      dispatch(fetchKonselorSuccess(response.data));
+    } catch (error) {
+      dispatch(fetchKonselorFailure(error.message));
+    }
+  };
+};
+
+export const getJadwalKonselor = () => {
+  return async (dispatch) => {
+    dispatch(fetchKonselorRequest());
+
+    const id = localStorage.getItem("userId");
+
+    try {
+      const response = await axios.get(
+        `https://be-capstone-project.vercel.app/konselors/${id}/jadwal`,
+        axiosConfig
+      );
+      dispatch(fetchKonselorSuccess(response.data));
+    } catch (error) {
+      dispatch(fetchKonselorFailure(error.message));
+    }
+  };
+};
+
 export const updateDataKonselor = (_id, newValues) => {
   return async (dispatch) => {
     dispatch(updateKonselorRequest());
@@ -89,6 +123,7 @@ export const updateDataKonselor = (_id, newValues) => {
     } catch (error) {
       dispatch(updateKonselorFailure(error.message));
       toast.error("Data gagal diperbarui !");
+      console.log(error);
     }
   };
 };

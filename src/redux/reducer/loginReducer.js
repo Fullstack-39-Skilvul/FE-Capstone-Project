@@ -15,7 +15,7 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: true,
         user: {
           ...action.payload,
-          role: action.payload.role, // Menyimpan peran di dalam state
+          role: action.payload.role,
         },
         error: null,
       };
@@ -24,7 +24,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: {
-          role: null, // Reset peran jika login gagal
+          role: null,
         },
         error: action.payload,
       };
@@ -33,7 +33,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: {
-          role: null, // Reset peran saat logout
+          role: null,
         },
         error: null,
       };
