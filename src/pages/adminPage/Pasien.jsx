@@ -7,6 +7,7 @@ import {
   updateDataPasien,
 } from "../../redux/action/pasienAction";
 import { Toaster } from "react-hot-toast";
+import { loginSuccess } from "../../redux/action/loginAction";
 
 function Pasien() {
   const dispatch = useDispatch();
@@ -26,7 +27,18 @@ function Pasien() {
   });
 
   useEffect(() => {
-    dispatch(getDataPasien());
+    const fetchData = async () => {
+      const userData = {
+        token: localStorage.getItem("token"),
+        userId: localStorage.getItem("userId"),
+      };
+      if (userData.token && userData.userId) {
+        dispatch(loginSuccess(userData));
+      }
+      dispatch(getDataPasien());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   const handleSearch = (e) => {

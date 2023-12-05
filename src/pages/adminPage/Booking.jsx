@@ -7,6 +7,7 @@ import {
 import dayjs from "dayjs";
 import { Button, Modal, Spinner } from "flowbite-react";
 import { Toaster } from "react-hot-toast";
+import { loginSuccess } from "../../redux/action/loginAction";
 
 function Booking() {
   const dispatch = useDispatch();
@@ -17,22 +18,43 @@ function Booking() {
   const [editBooking, setEditBooking] = useState(null);
   const { isLoading, bookings } = useSelector((state) => state.bookingAdmin);
 
-  console.log(bookings?.data);
   useEffect(() => {
-    dispatch(getDataBooking());
+    const fetchData = async () => {
+      const userData = {
+        token: localStorage.getItem("token"),
+        userId: localStorage.getItem("userId"),
+      };
+      if (userData.token && userData.userId) {
+        dispatch(loginSuccess(userData));
+      }
+      dispatch(getDataBooking());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   const handleSearch = (e) => {
     setSearchKeyword(e.target.value);
   };
 
-  const filteredBookings = bookings.data?.filter((item) =>
-    Object.values(item).some(
+  const filteredBookings = bookings.data?.filter((item) => {
+    const jenisKonselingInfo = item.jenisKonseling;
+    const bookingSearchCriteria = [
+      jenisKonselingInfo?.jenis,
+      item.pasien?.namaPasien,
+      item.konselor?.nama,
+      dayjs(item.tanggal).format("DD-MM-YYYY"),
+      item.waktu,
+      jenisKonselingInfo?.platformPertemuan,
+      item.status,
+    ];
+
+    return bookingSearchCriteria.some(
       (value) =>
         typeof value === "string" &&
         value.toLowerCase().includes(searchKeyword.toLowerCase())
-    )
-  );
+    );
+  });
 
   const handleDelete = (id) => {
     setOpenModalDelete(true);
@@ -116,7 +138,21 @@ function Booking() {
                     <td className="px-6 py-4">
                       {item.jenisKonseling?.platformPertemuan}
                     </td>
-                    <td className="px-6 py-4">{item.status}</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className={`${
+                          item.status === "Pending"
+                            ? "bg-red-100 text-center text-red-400 border border-red-400 rounded px-1"
+                            : item.status === "Confirmed"
+                            ? "bg-sky-100 text-center text-sky-400 border border-sky-400 rounded px-1"
+                            : item.status === "Dimulai"
+                            ? "bg-yellow-100 text-center text-yellow-400 border border-yellow-400 rounded"
+                            : "bg-green-100 text-center text-green-400 border border-green-400 rounded"
+                        }`}
+                      >
+                        {item.status}
+                      </div>
+                    </td>
 
                     <td className="px-6 py-4 gap-2 flex items-center">
                       <a

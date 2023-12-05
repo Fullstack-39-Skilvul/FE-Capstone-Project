@@ -6,6 +6,7 @@ import { spesialisasiReducer } from "./reducer/spesialisasiReducer";
 import { bookingReducer } from "./reducer/bookingAdminReducer";
 import { paymentReducer } from "./reducer/paymetAdminReducer";
 import authReducer from "./reducer/loginReducer";
+import { sidebarReducer } from "./reducer/sidebarReducer";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     bookingAdmin: bookingReducer,
     paymentAdmin: paymentReducer,
     auth: authReducer,
+    sidebar: sidebarReducer,
   },
 });

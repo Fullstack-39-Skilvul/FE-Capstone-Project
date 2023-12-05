@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { DATA_MENU } from "./constant";
 import { SignOut, User } from "phosphor-react";
-import { getDataKonselorById } from "../../redux/action/konselorAction";
+import { DATA_MENU } from "./constant";
+import { getDataSidebarById } from "../../redux/action/sidebarAction";
+import { logout } from "../../redux/action/loginAction";
 
 function SidebarKonselor() {
   const dispatch = useDispatch();
-  const { isLoading, konselors } = useSelector((state) => state.konselor);
+  const { dataSidebar } = useSelector((state) => state.sidebar);
 
   useEffect(() => {
-    dispatch(getDataKonselorById());
+    dispatch(getDataSidebarById());
   }, [dispatch]);
 
-  const avatarUrl = konselors?.avatar || ""; // Ganti dengan URL default jika avatar tidak ada
-  const adminName = konselors?.nama || "Admin"; // Ganti dengan nama default jika tidak ada nama
+  const avatarUrl = dataSidebar?.avatar || ""; // Ganti dengan URL default jika avatar tidak ada
+  const adminName = dataSidebar?.nama || "Admin"; // Ganti dengan nama default jika tidak ada nama
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     dispatch(logout());
   };
 
@@ -37,6 +40,7 @@ function SidebarKonselor() {
       </div>
       <div className="pl-3">
         <ul className="gap-4 flex flex-col">
+          {/* Menampilkan menu dari DATA_MENU */}
           {DATA_MENU.map((item) => (
             <NavLink key={item.id} to={item.link}>
               <li className="flex items-center gap-2 hover:bg-sky-400 hover:text-white py-1 rounded pl-2  mr-2">
@@ -44,11 +48,9 @@ function SidebarKonselor() {
               </li>
             </NavLink>
           ))}
-          <NavLink to="/login">
-            <li
-              onClick={handleLogout}
-              className="flex items-center gap-2 hover:bg-sky-400 hover:text-white py-1 rounded pl-2  mr-2"
-            >
+          {/* Menampilkan menu keluar */}
+          <NavLink to="/login" onClick={handleLogout}>
+            <li className="flex items-center gap-2 hover:bg-sky-400 hover:text-white py-1 rounded pl-2  mr-2">
               <SignOut /> Keluar
             </li>
           </NavLink>

@@ -9,8 +9,17 @@ import {
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { DATA_MENU } from "./constant";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/action/loginAction";
 
 function Sidebar() {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    dispatch(logout());
+  };
+
   return (
     <div className="shadow w-60 min-h-[100vh] absolute top-0 bg-white">
       <div className="pt-20 flex justify-center items-center flex-col">
@@ -28,6 +37,15 @@ function Sidebar() {
               </li>
             </NavLink>
           ))}
+
+          <NavLink to="/login">
+            <li
+              onClick={handleLogout}
+              className="flex items-center gap-2 hover:bg-sky-400 hover:text-white py-1 rounded pl-2  mr-2"
+            >
+              <SignOut /> Keluar
+            </li>
+          </NavLink>
         </ul>
       </div>
     </div>

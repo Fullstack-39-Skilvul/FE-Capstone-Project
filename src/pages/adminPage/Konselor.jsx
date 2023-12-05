@@ -9,6 +9,7 @@ import {
 import { Modal, Button, Spinner } from "flowbite-react";
 import { getDataSpesialisasi } from "../../redux/action/spesialisasiAction";
 import { Toaster } from "react-hot-toast";
+import { loginSuccess } from "../../redux/action/loginAction";
 
 function Konselor() {
   const dispatch = useDispatch();
@@ -21,7 +22,16 @@ function Konselor() {
   const [newKonselor, setNewKonselor] = useState({
     nama: "",
     email: "",
-    alamat: "",
+    password: "",
+    noTelepon: "",
+  });
+
+  // State untuk melacak kesalahan pada input
+  const [errors, setErrors] = useState({
+    nama: "",
+    email: "",
+    password: "",
+    spesialisasi: "",
     noTelepon: "",
   });
 
@@ -31,8 +41,19 @@ function Konselor() {
   );
 
   useEffect(() => {
-    dispatch(getDataKonselor());
-    dispatch(getDataSpesialisasi());
+    const fetchData = async () => {
+      const userData = {
+        token: localStorage.getItem("token"),
+        userId: localStorage.getItem("userId"),
+      };
+      if (userData.token && userData.userId) {
+        dispatch(loginSuccess(userData));
+      }
+      dispatch(getDataKonselor());
+      dispatch(getDataSpesialisasi());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -59,7 +80,6 @@ function Konselor() {
     setNewKonselor({
       nama: selectedKonselor ? selectedKonselor.nama : "",
       email: selectedKonselor ? selectedKonselor.email : "",
-      alamat: selectedKonselor ? selectedKonselor.alamat : "",
       noTelepon: selectedKonselor ? selectedKonselor.noTelepon : "",
     });
 
@@ -74,6 +94,26 @@ function Konselor() {
   };
 
   const handleSaveData = async () => {
+    // Validasi
+    const newErrors = {};
+    Object.keys(newKonselor).forEach((key) => {
+      if (newKonselor[key] === "") {
+        newErrors[key] = "Harap isi kolom ini";
+      }
+    });
+
+    if (selectedSpesialisasi === "") {
+      newErrors.spesialisasi = "Harap pilih spesialisasi";
+    }
+
+    setErrors(newErrors);
+
+    // Jika terdapat kesalahan, hentikan penyimpanan data
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
+    // Data konselor
     const konselorData = {
       ...newKonselor,
       spesialisasi: selectedSpesialisasi,
@@ -91,7 +131,7 @@ function Konselor() {
     setNewKonselor({
       nama: "",
       email: "",
-      alamat: "",
+      password: "",
       noTelepon: "",
     });
     setSelectedSpesialisasi("");
@@ -99,7 +139,6 @@ function Konselor() {
   };
 
   const handleDelete = (id) => {
-    // const selectedKonselor = konselors.data?.find((item) => item._id === id);
     setEditKonselor(id);
     setOpenModalDelete(true);
   };
@@ -206,7 +245,7 @@ function Konselor() {
           )}
         </div>
 
-        {/* modal */}
+        {/* Modal */}
         <Modal show={openModal} onClose={() => setOpenModal(false)}>
           <Modal.Header>
             {isEditing ? "Update Data Konselor" : "Create Data Konselor"}
@@ -215,7 +254,9 @@ function Konselor() {
             <form action="" className="flex flex-col text-sm gap-2">
               <label htmlFor="nama">Nama Konselor</label>
               <input
-                className="border rounded-lg"
+                className={`border rounded-lg ${
+                  errors.nama ? "border-red-500" : ""
+                }`}
                 type="text"
                 placeholder="Nama Konselor"
                 value={newKonselor.nama}
@@ -223,10 +264,15 @@ function Konselor() {
                   setNewKonselor({ ...newKonselor, nama: e.target.value })
                 }
               />
+              {errors.nama && (
+                <p className="text-red-500 text-sm">{errors.nama}</p>
+              )}
 
               <label htmlFor="email">Email</label>
               <input
-                className="border rounded-lg"
+                className={`border rounded-lg ${
+                  errors.email ? "border-red-500" : ""
+                }`}
                 type="email"
                 placeholder="Email"
                 value={newKonselor.email}
@@ -234,10 +280,15 @@ function Konselor() {
                   setNewKonselor({ ...newKonselor, email: e.target.value })
                 }
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
 
               <label htmlFor="password">Password</label>
               <input
-                className="border rounded-lg"
+                className={`border rounded-lg ${
+                  errors.password ? "border-red-500" : ""
+                }`}
                 type="password"
                 placeholder="Password"
                 value={newKonselor.password}
@@ -245,9 +296,15 @@ function Konselor() {
                   setNewKonselor({ ...newKonselor, password: e.target.value })
                 }
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
 
               <label htmlFor="spesialisasi">Spesialisasi</label>
               <select
+                className={`rounded-xl ${
+                  errors.spesialisasi ? "border-red-500" : ""
+                }`}
                 name="spesialisasi"
                 id="spesialisasi"
                 value={selectedSpesialisasi}
@@ -262,21 +319,15 @@ function Konselor() {
                   </option>
                 ))}
               </select>
-
-              <label htmlFor="alamat">Alamat</label>
-              <input
-                className="border rounded-lg"
-                type="text"
-                placeholder="Alamat"
-                value={newKonselor.alamat}
-                onChange={(e) =>
-                  setNewKonselor({ ...newKonselor, alamat: e.target.value })
-                }
-              />
+              {errors.spesialisasi && (
+                <p className="text-red-500 text-sm">{errors.spesialisasi}</p>
+              )}
 
               <label htmlFor="noTelepon">No Telepon</label>
               <input
-                className="border rounded-lg"
+                className={`border rounded-lg ${
+                  errors.noTelepon ? "border-red-500" : ""
+                }`}
                 type="number"
                 placeholder="No Telepon"
                 value={newKonselor.noTelepon}
@@ -284,6 +335,9 @@ function Konselor() {
                   setNewKonselor({ ...newKonselor, noTelepon: e.target.value })
                 }
               />
+              {errors.noTelepon && (
+                <p className="text-red-500 text-sm">{errors.noTelepon}</p>
+              )}
             </form>
           </Modal.Body>
           <Modal.Footer>
@@ -295,6 +349,7 @@ function Konselor() {
         </Modal>
         {/* akhir modal */}
 
+        {/* Modal Delete */}
         <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
           <Modal.Header>Hapus Data Pasien</Modal.Header>
           <Modal.Body>
@@ -315,6 +370,7 @@ function Konselor() {
             </Button>
           </Modal.Footer>
         </Modal>
+        {/* Akhir Modal Delete */}
       </div>
     </div>
   );

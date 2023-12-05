@@ -45,10 +45,4 @@ export const DATA_MENU = [
     link: "/admin/payment",
     icon: <Money />,
   },
-  {
-    id: 7,
-    menu: "Sign Out",
-    link: "/login",
-    icon: <SignOut />,
-  },
 ];
