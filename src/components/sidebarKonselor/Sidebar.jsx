@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DATA_MENU } from "./constant";
-import { User } from "phosphor-react";
+import { SignOut, User } from "phosphor-react";
 import { getDataKonselorById } from "../../redux/action/konselorAction";
 
 function SidebarKonselor() {
@@ -15,6 +15,9 @@ function SidebarKonselor() {
 
   const avatarUrl = konselors?.avatar || ""; // Ganti dengan URL default jika avatar tidak ada
   const adminName = konselors?.nama || "Admin"; // Ganti dengan nama default jika tidak ada nama
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div className="shadow w-60 min-h-[100vh] absolute top-0 bg-white">
@@ -41,6 +44,14 @@ function SidebarKonselor() {
               </li>
             </NavLink>
           ))}
+          <NavLink to="/login">
+            <li
+              onClick={handleLogout}
+              className="flex items-center gap-2 hover:bg-sky-400 hover:text-white py-1 rounded pl-2  mr-2"
+            >
+              <SignOut /> Keluar
+            </li>
+          </NavLink>
         </ul>
       </div>
     </div>

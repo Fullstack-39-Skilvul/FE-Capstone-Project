@@ -16,9 +16,8 @@ import { useNavigate } from "react-router-dom";
 function Media() {
   const [openModal, setOpenModal] = useState(false);
   const [openModalOnline, setOpenModalOnline] = useState(false);
-  const [metode, setMetode] = useState('');
-  const navigate = useNavigate()
-
+  const [metode, setMetode] = useState("");
+  const navigate = useNavigate();
 
   const clearLocalStorage = () => {
     localStorage.removeItem("metode");
@@ -38,9 +37,16 @@ function Media() {
     };
   }, []); // Menambahkan location ke dependencies jika dibutuhkan
 
-
   const handleIdjenis = (id) => {
-  //   const harga = metode.jenis === "offline" ? 399000 : 249000;
+    // Check if there is a token
+    const token = localStorage.getItem("token");
+
+    // If there is no token, redirect to the login page
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    //   const harga = metode.jenis === "offline" ? 399000 : 249000;
     const updatedMetode = { ...metode, id: id };
     setMetode(updatedMetode);
 
@@ -50,15 +56,11 @@ function Media() {
   };
 
   const handleModal = () => {
-    setOpenModal(true)
-  }
+    setOpenModal(true);
+  };
   const handleModalOnline = () => {
-    setOpenModalOnline(true)
-  }
-  
- 
-
-
+    setOpenModalOnline(true);
+  };
 
   return (
     <div id="pricing" className="mx-10 text-stone-600">
@@ -107,8 +109,19 @@ function Media() {
               Rp. 399K<span className="text-stone-700 text-base">/Jam</span>
             </div>
             <div>
-              <button onClick={() => handleModal("offline")} className="bg-yellow-300 hover:bg-sky-500 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold"> Jadwalkan Konsultasi</button>
-              <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+              <button
+                onClick={() => handleModal("offline")}
+                className="bg-yellow-300 hover:bg-sky-500 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold"
+              >
+                {" "}
+                Jadwalkan Konsultasi
+              </button>
+              <Modal
+                show={openModal}
+                size="md"
+                onClose={() => setOpenModal(false)}
+                popup
+              >
                 <Modal.Header />
                 <Modal.Body>
                   <div className="text-center">
@@ -117,10 +130,20 @@ function Media() {
                       Konseling Offline
                     </h3>
                     <div className="flex justify-center gap-4">
-                      <Button color="blue" onClick={() => handleIdjenis("6568b0ef7b25667391be0d01")}>
+                      <Button
+                        color="blue"
+                        onClick={() =>
+                          handleIdjenis("6568b0ef7b25667391be0d01")
+                        }
+                      >
                         {"Bandung"}
                       </Button>
-                      <Button color="gray" onClick={() => handleIdjenis("6568be9c8cb39b642e44c69d")}>
+                      <Button
+                        color="gray"
+                        onClick={() =>
+                          handleIdjenis("6568be9c8cb39b642e44c69d")
+                        }
+                      >
                         {"Jakarta"}
                       </Button>
                     </div>
@@ -160,8 +183,19 @@ function Media() {
               Rp. 249K<span className="text-stone-700 text-base">/Jam</span>
             </div>
             <div>
-              <button onClick={() => handleModalOnline("online")} className="bg-yellow-300 hover:bg-sky-500 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold"> Jadwalkan Konsultasi</button>
-              <Modal show={openModalOnline} size="md" onClose={() => setOpenModalOnline(false)} popup>
+              <button
+                onClick={() => handleModalOnline("online")}
+                className="bg-yellow-300 hover:bg-sky-500 text-blue-950 px-6 py-2 rounded-xl mt-5 font-semibold"
+              >
+                {" "}
+                Jadwalkan Konsultasi
+              </button>
+              <Modal
+                show={openModalOnline}
+                size="md"
+                onClose={() => setOpenModalOnline(false)}
+                popup
+              >
                 <Modal.Header />
                 <Modal.Body>
                   <div className="text-center">
@@ -170,10 +204,20 @@ function Media() {
                       Konseling Online
                     </h3>
                     <div className="flex justify-center gap-4">
-                      <Button color="failure" onClick={() => handleIdjenis("6561b782b0edf6551d1a3c46")}>
+                      <Button
+                        color="failure"
+                        onClick={() =>
+                          handleIdjenis("6561b782b0edf6551d1a3c46")
+                        }
+                      >
                         {"Whatsapp"}
                       </Button>
-                      <Button color="gray" onClick={() => handleIdjenis("6568bdfb8cb39b642e44c694")}>
+                      <Button
+                        color="gray"
+                        onClick={() =>
+                          handleIdjenis("6568bdfb8cb39b642e44c694")
+                        }
+                      >
                         {"Google Meet"}
                       </Button>
                     </div>
