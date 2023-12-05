@@ -18,7 +18,7 @@ const BiodataCard = () => {
 
   const getKonselor = async () => {
     try {
-      const token = localStorage.getItem("YOUR_LOCAL_STORAGE_KEY");
+      const token = localStorage.getItem("token");
 
       const res = await axios.get(
         `https://be-capstone-project.vercel.app/konselors/` + id,
@@ -39,15 +39,18 @@ const BiodataCard = () => {
 
   const submitbutton = async () => {
     try {
-      const token = localStorage.getItem("YOUR_LOCAL_STORAGE_KEY");
-
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      const jenisId = localStorage.getItem("metode");
+      // Ubah bagian ini
+      const jenisKonselingId = jenisId.id;
       // Persiapkan data booking yang sesuai
       const bookingData = {
         tanggal: tanggal,
         waktu: jam,
         pasien: userId,
         konselor: id,
-        jenisKonseling: jenisId,
+        jenisKonseling: jenisKonselingId,
       };
 
       // Kirim data booking ke API
