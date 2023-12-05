@@ -1,5 +1,4 @@
-// LoginPage.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
@@ -15,16 +14,11 @@ function LoginPage() {
     password: "",
   });
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    await dispatch(loginUser(loginData));
-
+  useEffect(() => {
     const userRole = auth.user?.role;
 
     if (auth.isAuthenticated) {
       toast.success("Login successful!");
-
       setLoginData({
         email: "",
         password: "",
@@ -35,7 +29,7 @@ function LoginPage() {
           navigate("/admin");
           break;
         case "konselor":
-          navigate("/konselorPage");
+          navigate("/konselorDashboard");
           break;
         case "pasien":
           navigate("/");
@@ -43,9 +37,14 @@ function LoginPage() {
         default:
           toast.error("Unknown user role. Please contact support.");
       }
-    } else {
+    } else if (auth.error) {
       toast.error("Login failed. Please check your credentials.");
     }
+  }, [auth.isAuthenticated, auth.error, auth.user, navigate]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(loginData));
   };
 
   return (

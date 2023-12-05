@@ -32,10 +32,11 @@ export const konselorReducer = (state = initialValue, action) => {
       return {
         ...state,
         isLoading: false,
-        konselors: state.konselors?.data.map((konselor) =>
+        konselors: (state.konselors?.data || []).map((konselor) =>
           konselor._id === action.payload._id ? action.payload : konselor
         ),
       };
+
     case "FAILURE_UPDATE_DATA_KONSELOR":
       return {
         ...state,
