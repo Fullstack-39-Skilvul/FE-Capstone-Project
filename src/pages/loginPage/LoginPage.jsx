@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { loginUser } from "../../redux/action/loginAction";
 import { IMAGES } from "../../assets/constant";
@@ -147,9 +147,9 @@ function LoginPage() {
           </form>
           <div className="mt-10">
             Belum punya akun ?{" "}
-            <a className="text-blue-950 font-semibold" href="/register">
-              Daftar
-            </a>
+            <NavLink to="/register">
+              <a className="text-blue-950 font-semibold">Daftar</a>
+            </NavLink>
           </div>
         </div>
       </div>
