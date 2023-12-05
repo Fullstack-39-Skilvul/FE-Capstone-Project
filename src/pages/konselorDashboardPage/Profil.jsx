@@ -155,7 +155,7 @@ function Profil() {
           <Spinner />
         </div>
       ) : (
-        <div className="relative max-h-80 border overflow-x-auto p-10 shadow-md sm:rounded-lg mt-5">
+        <div className="flex flex-col max-h-80 border overflow-x-auto p-10 shadow-md sm:rounded-lg mt-5">
           <div className=" w-49 h-40 object-cover mb-[150px]">
             {konselors.avatar ? (
               <div className="flex justify-center flex-col items-center ">
@@ -184,7 +184,9 @@ function Profil() {
               <label htmlFor="motivasi" className=" w-40">
                 Motivasi
               </label>
-              <p>{konselors.motivasi ? konselors.motivasi : "not Found"}</p>
+              <p className="">
+                {konselors.motivasi ? konselors.motivasi : "not Found"}
+              </p>
             </div>
             <div className="flex gap-20">
               <label htmlFor="email" className="w-40">

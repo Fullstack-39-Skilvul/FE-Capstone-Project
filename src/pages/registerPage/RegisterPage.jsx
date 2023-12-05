@@ -8,7 +8,7 @@ import { Toaster, toast } from "react-hot-toast";
 function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [error, setError] = useState("");
   const [newValue, setNewValue] = useState({
     namaPasien: "",
     email: "",
@@ -20,8 +20,11 @@ function RegisterPage() {
   const handleCreate = async (e) => {
     e.preventDefault();
 
+    // Reset pesan kesalahan setiap kali formulir di-submit
+    setError("");
+
     if (!newValue.namaPasien || !newValue.email || !newValue.password) {
-      console.error("Please fill in all required fields");
+      setError("Please fill in all required fields");
       return;
     }
 
@@ -47,6 +50,9 @@ function RegisterPage() {
       console.error("Error during registration:", error.message);
       // Optionally, you can show an error notification here
       toast.error("Registration failed. Please try again.");
+
+      // Set pesan kesalahan untuk ditampilkan kepada pengguna
+      setError("Registration failed. Please try again.");
     }
   };
 
@@ -125,7 +131,7 @@ function RegisterPage() {
                 })
               }
             />
-            {/* Add more input fields if needed */}
+            {error && <p className="text-red-500">{error}</p>}
             <button
               onClick={handleCreate}
               className="w-full py-1 bg-sky-500 rounded-md text-white"
