@@ -43,30 +43,24 @@ const deletePaymentFailure = (error) => ({
   payload: error,
 });
 
-const config = () => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    console.error("Token is missing in localStorage");
-    return {};
-  }
-
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-};
-
-const axiosConfig = config();
-
 export const getDataPayment = () => {
   return async (dispatch) => {
     dispatch(fetchPaymentRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchPaymentFailure("Token is missing"));
+        return;
+      }
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/payments",
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(fetchPaymentSuccess(response.data));
     } catch (error) {
@@ -79,10 +73,21 @@ export const updateDataPayment = (id, newValues) => {
   return async (dispatch) => {
     dispatch(updatePaymentRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchPaymentFailure("Token is missing"));
+        return;
+      }
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/payments/${id}`,
         newValues,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(updatePaymentSuccess(response.data));
       toast.success("Status berhasil di rubah!");
@@ -97,9 +102,20 @@ export const deleteDataPayment = (id) => {
   return async (dispatch) => {
     dispatch(deletePaymentRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchPaymentFailure("Token is missing"));
+        return;
+      }
       await axios.delete(
         `https://be-capstone-project.vercel.app/payments/${id}`,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(deletePaymentSuccess(id));
       toast.success("Data berhasil dihapus!");
@@ -113,10 +129,21 @@ export const deleteDataPayment = (id) => {
 export const createDataPayment = (newPayment) => {
   return async (dispatch) => {
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchPaymentFailure("Token is missing"));
+        return;
+      }
       await axios.post(
         "https://be-capstone-project.vercel.app/payments",
         newPayment,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(getDataPayment());
       toast.success("Berhasil membuat data!");

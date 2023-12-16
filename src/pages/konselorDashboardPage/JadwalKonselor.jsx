@@ -19,8 +19,6 @@ function JadwalKonselor() {
     dispatch(getJadwalKonselor());
   }, [dispatch]);
 
-  console.log("dari jadwal", konselors);
-
   const handleSearch = (e) => {
     setSearchKeyword(e.target.value);
   };
@@ -224,7 +222,11 @@ function JadwalKonselor() {
       </div>
 
       {/* Confirmation Modal */}
-      <Modal show={showConfirmationModal} onClose={handleCancelConfirmation}>
+      <Modal
+        size={"xl"}
+        show={showConfirmationModal}
+        onClose={handleCancelConfirmation}
+      >
         <Modal.Header>Konfirmasi</Modal.Header>
         <Modal.Body>
           <p>{confirmationMessage}</p>

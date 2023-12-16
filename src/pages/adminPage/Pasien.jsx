@@ -27,18 +27,7 @@ function Pasien() {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userData = {
-        token: localStorage.getItem("token"),
-        userId: localStorage.getItem("userId"),
-      };
-      if (userData.token && userData.userId) {
-        dispatch(loginSuccess(userData));
-      }
-      dispatch(getDataPasien());
-    };
-
-    fetchData();
+    dispatch(getDataPasien());
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -228,7 +217,11 @@ function Pasien() {
         {/* akhir modal */}
 
         {/* modal konfirmasi delete */}
-        <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
+        <Modal
+          size={"xl"}
+          show={openModalDelete}
+          onClose={() => setOpenModalDelete(false)}
+        >
           <Modal.Header>Hapus Data Pasien</Modal.Header>
           <Modal.Body>
             <p>Apakah Anda yakin ingin menghapus data pasien ini?</p>

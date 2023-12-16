@@ -44,7 +44,7 @@ function NavbarComponent() {
       fluid
       rounded
       theme={customTheme}
-      className="border-b fixed w-full top-0"
+      className="border-b fixed w-full top-0 z-50"
     >
       <Navbar.Brand>
         <img src={IMAGES.logoManahsucita} alt="logo manahsucita" width={130} />
@@ -92,8 +92,8 @@ function NavbarComponent() {
         <ScrollLink to="pricing" smooth={true} duration={500}>
           <Navbar.Link className="cursor-pointer">Pricing</Navbar.Link>
         </ScrollLink>
-        <Navbar.Link to="/contact">
-          <NavLink to="/contact">Contact</NavLink>
+        <Navbar.Link>
+          <NavLink to="contact">Contact</NavLink>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

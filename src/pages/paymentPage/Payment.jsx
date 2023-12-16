@@ -1,10 +1,11 @@
-import axios from "axios";
-import { format } from "date-fns";
-import { Button, Modal } from "flowbite-react";
-import { WhatsappLogo } from "phosphor-react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
+import { Button, Modal } from "flowbite-react";
+import { WhatsappLogo } from "phosphor-react";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 function Payment() {
   const { idbooking } = useParams();
@@ -12,15 +13,22 @@ function Payment() {
   const [selectedBank, setSelectedBank] = useState("");
   const [booking, setBooking] = useState("");
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const token = localStorage.getItem(`token`) || null;
+  const [isBankSelected, setIsBankSelected] = useState(false);
+  const token = localStorage.getItem("token") || null;
 
   const handleBankChange = (event) => {
     setSelectedBank(event.target.value);
+    setIsBankSelected(true);
   };
 
   const handlePaymentProofSubmit = async () => {
-    // Buka modal konfirmasi
-    setIsConfirmationModalOpen(true);
+    // Check if a bank is selected before opening the confirmation modal
+    if (isBankSelected) {
+      setIsConfirmationModalOpen(true);
+    } else {
+      // Display a toast notification if no bank is selected
+      toast.error("Silakan pilih bank sebelum mengirim bukti pembayaran.");
+    }
   };
 
   const confirmPaymentSubmission = async () => {
@@ -34,7 +42,7 @@ function Payment() {
 
       // Kirim data booking ke API
       const res = await axios.post(
-        `https://be-capstone-project.vercel.app/payments/`,
+        "https://be-capstone-project.vercel.app/payments/",
         bookingData,
         {
           headers: {
@@ -56,7 +64,7 @@ function Payment() {
   async function getBooking() {
     try {
       const res = await axios.get(
-        `https://be-capstone-project.vercel.app/bookings/` + idbooking,
+        "https://be-capstone-project.vercel.app/bookings/" + idbooking,
         {
           headers: {
             // 'Content-Type': 'application/json',
@@ -84,7 +92,7 @@ function Payment() {
       - Metode Pembayaran: ${selectedBank}
       - Tanggal Pembayaran: ${format(new Date(), "dd MMMM yyyy")}
       - Total Pembayaran: ${
-        booking ? formatRupiah(booking.jenisKonseling.harga) : "loading.."
+        booking ? formatRupiah(booking.jenisKonseling?.harga) : "loading.."
       }
 
     Saya akan mengirim bukti pembayaran, mohon untuk segera diverifikasi. 
@@ -112,7 +120,7 @@ function Payment() {
   }, []);
 
   return (
-    <div className="flex flex-col  justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       <div className="text-2xl lg:mt-[100px] md:mb-5 md:text-4xl text-center font-bold text-blue-950">
         Payment
         <span className="text-sky-500"> Page</span>
@@ -129,6 +137,7 @@ function Payment() {
                 value={selectedBank}
                 onChange={handleBankChange}
               >
+                <option className="flex justify-between">Pilih Bank</option>
                 <option
                   value="222-222-444-555 BRI"
                   className="flex justify-between"
@@ -165,7 +174,7 @@ function Payment() {
             <div className="flex justify-between shadow-xl border rounded-lg border-gray-200 px-3 py-2">
               <p>
                 {booking
-                  ? formatRupiah(booking.jenisKonseling.harga)
+                  ? formatRupiah(booking.jenisKonseling?.harga)
                   : "loading.."}
               </p>
             </div>
@@ -178,7 +187,7 @@ function Payment() {
           <ol className="list-decimal space-y-2">
             <li>Lakukan pembayaran dengan harga yang tertera di atas</li>
             <li>Masukan nomer rekening sesuai dengan yang kamu pilih</li>
-            <li>Screenshot butki pembayaran</li>
+            <li>Screenshot bukti pembayaran</li>
             <li>Kirim bukti pembyaran pada tombol di bawah ini</li>
             <li>Tunggu validasi dari admin {"(Max 1x24 Jam)"}</li>
           </ol>
@@ -216,6 +225,8 @@ function Payment() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <Toaster reverseOrder={false} />
     </div>
   );
 }

@@ -23,18 +23,7 @@ const Payment = () => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userData = {
-        token: localStorage.getItem("token"),
-        userId: localStorage.getItem("userId"),
-      };
-      if (userData.token && userData.userId) {
-        dispatch(loginSuccess(userData));
-      }
-      dispatch(getDataPayment());
-    };
-
-    fetchData();
+    dispatch(getDataPayment());
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -214,25 +203,26 @@ const Payment = () => {
 
         {/* modal for delete confirmation */}
         <Modal
+          size={"xl"}
           show={openModalDelete && !isEdit}
           onClose={() => setOpenModalDelete(false)}
         >
           <Modal.Header>Hapus Data Payment</Modal.Header>
           <Modal.Body>
-            <p>Are you sure you want to delete this payment data?</p>
+            <p>Apakah kamu yakin akan menghapus data payment?</p>
           </Modal.Body>
           <Modal.Footer>
             <Button
               className="bg-red-500 text-white"
               onClick={handleAcceptDelete}
             >
-              Yes, Delete
+              Ya, Hapus
             </Button>
             <Button
               className="bg-sky-500"
               onClick={() => setOpenModalDelete(false)}
             >
-              Cancel
+              Batal
             </Button>
           </Modal.Footer>
         </Modal>
