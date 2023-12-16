@@ -43,23 +43,6 @@ const deletePasienFailure = (error) => ({
   payload: error,
 });
 
-const config = () => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    console.error("Token is missing in localStorage");
-    return {};
-  }
-
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-};
-
-const axiosConfig = config();
-
 export const createDataPasien = (newValue) => {
   return async (dispatch) => {
     try {
@@ -80,10 +63,23 @@ export const getDataPasien = () => {
   return async (dispatch) => {
     dispatch(fetchPasienRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchPasienFailure("Token is missing"));
+        return;
+      }
+
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/pasiens",
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       dispatch(fetchPasienSuccess(response.data));
     } catch (error) {
       dispatch(fetchPasienFailure(error.message));
@@ -95,10 +91,22 @@ export const updateDataPasien = (_id, newValues) => {
   return async (dispatch) => {
     dispatch(updatePasienRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchPasienFailure("Token is missing"));
+        return;
+      }
+
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/pasiens/${_id}`,
         newValues,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(updatePasienSuccess(response.data));
       toast.success("Data berhasil diperbarui !");
@@ -113,9 +121,21 @@ export const deleteDataPasien = (id) => {
   return async (dispatch) => {
     dispatch(deletePasienRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchPasienFailure("Token is missing"));
+        return;
+      }
+
       await axios.delete(
         `https://be-capstone-project.vercel.app/pasiens/${id}`,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(deletePasienSuccess(id));
       toast.success("Data berhasil dihapus !");

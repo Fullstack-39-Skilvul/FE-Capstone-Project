@@ -19,18 +19,7 @@ function Booking() {
   const { isLoading, bookings } = useSelector((state) => state.bookingAdmin);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userData = {
-        token: localStorage.getItem("token"),
-        userId: localStorage.getItem("userId"),
-      };
-      if (userData.token && userData.userId) {
-        dispatch(loginSuccess(userData));
-      }
-      dispatch(getDataBooking());
-    };
-
-    fetchData();
+    dispatch(getDataBooking());
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -170,98 +159,15 @@ function Booking() {
           )}
         </div>
 
-        {/* modal */}
-        {/* <Modal show={openModal} onClose={() => setOpenModal(false)}>
-          <Modal.Header>Create Data Konselor</Modal.Header>
-          <Modal.Body>
-            <form action="" className="flex flex-col text-sm gap-2">
-              <label htmlFor="nama">Nama Konselor</label>
-              <input
-                className="border rounded-lg"
-                type="text"
-                placeholder="Nama Konselor"
-                value={newKonselor.nama}
-                onChange={(e) =>
-                  setNewKonselor({ ...newKonselor, nama: e.target.value })
-                }
-              />
-
-              <label htmlFor="email">Email</label>
-              <input
-                className="border rounded-lg"
-                type="email"
-                placeholder="Email"
-                value={newKonselor.email}
-                onChange={(e) =>
-                  setNewKonselor({ ...newKonselor, email: e.target.value })
-                }
-              />
-
-              <label htmlFor="password">Password</label>
-              <input
-                className="border rounded-lg"
-                type="password"
-                placeholder="Password"
-                value={newKonselor.password}
-                onChange={(e) =>
-                  setNewKonselor({ ...newKonselor, password: e.target.value })
-                }
-              />
-
-              <label htmlFor="spesialisasi">Spesialisasi</label>
-              <select
-                name="spesialisasi"
-                id="spesialisasi"
-                value={selectedSpesialisasi}
-                onChange={(e) => setSelectedSpesialisasi(e.target.value)}
-              >
-                <option value="" disabled>
-                  Pilih Spesialisasi
-                </option>
-                {spesialisasis.data?.map((item) => (
-                  <option key={item._id} value={item._id}>
-                    {item.namaSpesialisasi}
-                  </option>
-                ))}
-              </select>
-
-              <label htmlFor="alamat">Alamat</label>
-              <input
-                className="border rounded-lg"
-                type="text"
-                placeholder="Alamat"
-                value={newKonselor.alamat}
-                onChange={(e) =>
-                  setNewKonselor({ ...newKonselor, alamat: e.target.value })
-                }
-              />
-
-              <label htmlFor="noTelepon">No Telepon</label>
-              <input
-                className="border rounded-lg"
-                type="number"
-                placeholder="No Telepon"
-                value={newKonselor.noTelepon}
-                onChange={(e) =>
-                  setNewKonselor({ ...newKonselor, noTelepon: e.target.value })
-                }
-              />
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={handleCreateData}>I accept</Button>
-            <Button color="gray" onClick={() => setOpenModal(false)}>
-              Decline
-            </Button>
-          </Modal.Footer>
-        </Modal> */}
-        {/* akhir modal */}
-
         {/* modal konfirmasi delete */}
-        <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
-          <Modal.Header>Hapus Data Pasien</Modal.Header>
+        <Modal
+          size={"xl"}
+          show={openModalDelete}
+          onClose={() => setOpenModalDelete(false)}
+        >
+          <Modal.Header>Hapus Data Booking</Modal.Header>
           <Modal.Body>
-            <p>Apakah Anda yakin ingin menghapus data pasien ini?</p>
+            <p>Apakah Anda yakin ingin menghapus data booking ini?</p>
           </Modal.Body>
           <Modal.Footer>
             <Button

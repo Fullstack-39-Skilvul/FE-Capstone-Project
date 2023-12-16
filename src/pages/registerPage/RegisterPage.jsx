@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import { createDataPasien } from "../../redux/action/pasienAction";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
+import { Spinner } from "flowbite-react";
 
 function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // State untuk mengontrol loading
   const [newValue, setNewValue] = useState({
     namaPasien: "",
     email: "",
@@ -19,20 +21,19 @@ function RegisterPage() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-
-    // Reset pesan kesalahan setiap kali formulir di-submit
     setError("");
 
     if (!newValue.namaPasien || !newValue.email || !newValue.password) {
-      setError("Please fill in all required fields");
+      setError("Data tidak boleh kosong !");
       return;
     }
 
     try {
-      // Dispatch the action
+      // Menetapkan isLoading menjadi true saat proses registrasi dimulai
+      setIsLoading(true);
+
       await dispatch(createDataPasien(newValue));
 
-      // Reset form values
       setNewValue({
         namaPasien: "",
         email: "",
@@ -41,18 +42,17 @@ function RegisterPage() {
         noTelepon: "",
       });
 
-      // Show success notification
       toast.success("Registration successful! Please login.");
 
-      // Redirect to the login page after successful registration
       navigate("/login");
     } catch (error) {
       console.error("Error during registration:", error.message);
-      // Optionally, you can show an error notification here
       toast.error("Registration failed. Please try again.");
 
-      // Set pesan kesalahan untuk ditampilkan kepada pengguna
       setError("Registration failed. Please try again.");
+    } finally {
+      // Menetapkan isLoading menjadi false setelah proses registrasi selesai
+      setIsLoading(false);
     }
   };
 
@@ -132,11 +132,12 @@ function RegisterPage() {
               }
             />
             {error && <p className="text-red-500">{error}</p>}
+            {/* Menampilkan spinner jika isLoading true */}
             <button
               onClick={handleCreate}
               className="w-full py-1 bg-sky-500 rounded-md text-white"
             >
-              Register
+              {isLoading ? <Spinner /> : <p>Register</p>}
             </button>
           </form>
           <div className="mt-10">

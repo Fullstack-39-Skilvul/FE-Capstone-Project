@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { loginUser } from "../../redux/action/loginAction";
 import { IMAGES } from "../../assets/constant";
-import { Spinner } from "phosphor-react";
+import { Spinner } from "flowbite-react";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -135,14 +135,7 @@ function LoginPage() {
               onClick={handleLogin}
               className="flex justify-center w-full py-1 bg-sky-500 rounded-md text-white relative"
             >
-              {isAuthenticating && (
-                <Spinner
-                  className="absolute left-0 right-0 w-full bg-sky-500 mt-[-4px] rounded-md transform "
-                  size={30}
-                  color="#fff"
-                />
-              )}
-              Login
+              {isAuthenticating ? <Spinner /> : <p>Login</p>}
             </button>
           </form>
           <div className="mt-10">

@@ -43,29 +43,24 @@ const deleteSpesialisasiFailure = (error) => ({
   payload: error,
 });
 
-const config = () => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    console.error("Token is missing in localStorage");
-    return {};
-  }
-
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-};
-
-const axiosConfig = config();
 export const getDataSpesialisasi = () => {
   return async (dispatch) => {
     dispatch(fetchSpesialisasiRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchSpesialisasiFailure("Token is missing"));
+        return;
+      }
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/spesialisasis",
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(fetchSpesialisasiSuccess(response.data));
     } catch (error) {
@@ -78,10 +73,21 @@ export const updateDataSpesialisasi = (id, newValues) => {
   return async (dispatch) => {
     dispatch(updateSpesialisasiRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchSpesialisasiFailure("Token is missing"));
+        return;
+      }
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/spesialisasis/${id}`,
         newValues,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(updateSpesialisasiSuccess(response.data));
       toast.success("Berhasil memperbarui data!");
@@ -96,9 +102,20 @@ export const deleteDataSpesialisasi = (id) => {
   return async (dispatch) => {
     dispatch(deleteSpesialisasiRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchSpesialisasiFailure("Token is missing"));
+        return;
+      }
       await axios.delete(
         `https://be-capstone-project.vercel.app/spesialisasis/${id}`,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(deleteSpesialisasiSuccess(id));
       toast.success("Berhasil menghapus data!");
@@ -112,10 +129,21 @@ export const deleteDataSpesialisasi = (id) => {
 export const createDataSpesialisasi = (newSpesialisasi) => {
   return async (dispatch) => {
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchSpesialisasiFailure("Token is missing"));
+        return;
+      }
       await axios.post(
         "https://be-capstone-project.vercel.app/spesialisasis",
         newSpesialisasi,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(getDataSpesialisasi());
       toast.success("Berhasil membuat data !");

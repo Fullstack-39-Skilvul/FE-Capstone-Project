@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Spesifikasi from "./Spesifikasi";
 import axios from "axios";
+import { Spinner } from "flowbite-react";
 
 const CardKonselor = () => {
   const [konselor, setKonselor] = useState(null);
@@ -46,7 +47,7 @@ const CardKonselor = () => {
               >
                 <picture className="rounded">
                   <img
-                    className="rounded-full aspect-square mx-3 my-2 w-20 h-[78px] border border-[#0F2650]"
+                    className="rounded-full object-cover aspect-square mx-3 my-2 w-20 h-[78px] border border-[#0F2650]"
                     src={item.avatar}
                   />
                 </picture>
@@ -67,7 +68,9 @@ const CardKonselor = () => {
             );
           })
         ) : (
-          <p>loading</p>
+          <div className="mt-20 h-[30vh]">
+            <Spinner />
+          </div>
         )}
       </div>
     </>

@@ -19,4 +19,9 @@ export const store = configureStore({
     auth: authReducer,
     sidebar: sidebarReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    }),
 });
