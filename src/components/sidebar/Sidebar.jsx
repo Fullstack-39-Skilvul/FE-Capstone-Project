@@ -1,11 +1,4 @@
-import {
-  Bandaids,
-  Gauge,
-  HardDrive,
-  SignOut,
-  Syringe,
-  User,
-} from "phosphor-react";
+import { SignOut, User } from "phosphor-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { DATA_MENU } from "./constant";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IMAGES } from "../../assets/constant";
 import { useDispatch } from "react-redux";
 import { createDataPasien } from "../../redux/action/pasienAction";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { Spinner } from "flowbite-react";
 
@@ -142,9 +142,9 @@ function RegisterPage() {
           </form>
           <div className="mt-10">
             Sudah punya akun ?
-            <a className="text-blue-950 font-semibold" href="/login">
-              Sign
-            </a>
+            <NavLink to="/login">
+              <a className="text-blue-950 font-semibold">Sign</a>
+            </NavLink>
           </div>
         </div>
       </div>
