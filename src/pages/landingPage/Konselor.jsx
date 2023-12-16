@@ -8,7 +8,6 @@ function Konselor() {
   const dispatch = useDispatch();
   const { isLoading, konselors } = useSelector((state) => state.dataKonselor);
 
-  // console.log(konselors.data);
   useEffect(() => {
     dispatch(getDataKonselor());
   }, [dispatch]);
@@ -29,8 +28,8 @@ function Konselor() {
       </div>
       <div className="flex gap-10 overflow-x-auto w-[100%]">
         {konselors.data?.map((item) => (
-          <div className="shadow border rounded-xl mt-10 w-64">
-            <div className="">
+          <div key={item._id} className="shadow border rounded-xl mt-10 w-64">
+            <div>
               <img
                 className="h-60 max-w-[100%] object-cover"
                 src={item.avatar}
@@ -60,7 +59,10 @@ function Konselor() {
         </div>
         <div className="flex gap-10 flex-wrap items-center justify-center mt-5">
           {DATA_SPESIALIS.map((item) => (
-            <div className="flex flex-col justify-center items-center ">
+            <div
+              key={item.id}
+              className="flex flex-col justify-center items-center "
+            >
               <div className="bg-sky-500 text-2xl cursor-pointer hover:bg-yellow-300 w-14 h-14 items-center rounded-full justify-center flex">
                 {item.icon}
               </div>

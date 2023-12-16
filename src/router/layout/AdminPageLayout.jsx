@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import HeaderAdmin from "../../components/headerAdmin/HeaderAdmin";
 import ContentAdmin from "../../components/contentAdmin/ContentAdmin";
 import Dashboard from "../../pages/adminPage/Dashboard";
@@ -11,19 +11,30 @@ import Payment from "../../pages/adminPage/payment";
 import Sidebar from "../../components/sidebar/Sidebar";
 
 function AdminPageLayout() {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/", { replace: true });
+    }
+  }, [token, navigate]);
+
   return (
     <div className="h-[100vh] absolute bg-gray-50 w-full">
       <HeaderAdmin />
       <Sidebar />
       <ContentAdmin>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/pasien" element={<Pasien />} />
-          <Route path="/konselor" element={<Konselor />} />
-          <Route path="/spesialis" element={<Spesialis />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/payment" element={<Payment />} />
-        </Routes>
+        {token && (
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="pasien" element={<Pasien />} />
+            <Route path="konselor" element={<Konselor />} />
+            <Route path="spesialis" element={<Spesialis />} />
+            <Route path="booking" element={<Booking />} />
+            <Route path="payment" element={<Payment />} />
+          </Routes>
+        )}
       </ContentAdmin>
     </div>
   );

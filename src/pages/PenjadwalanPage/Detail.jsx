@@ -3,6 +3,7 @@ import Spesifikasi from "./Spesifikasi";
 import MediaSesi from "./Components/MediaSesi";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Skeleton from "react-loading-skeleton";
 
 const Detail = () => {
   const { idbooking } = useParams();
@@ -94,7 +95,7 @@ const Detail = () => {
                 />
               </picture>
             ) : (
-              <p>loading</p>
+              <Skeleton className="ml-3" circle width={80} height={80} />
             )}
 
             {booking ? (
@@ -105,7 +106,10 @@ const Detail = () => {
                 <Spesifikasi />
               </div>
             ) : (
-              <p>loading</p>
+              <div className="flex flex-col">
+                <Skeleton className="ml-5 mt-5" width={100} />
+                <Skeleton className="ml-5 mt-2" width={50} />
+              </div>
             )}
           </div>
           <div>

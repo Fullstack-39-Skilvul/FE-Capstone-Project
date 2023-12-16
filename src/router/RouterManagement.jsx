@@ -17,15 +17,15 @@ function RouterManagement() {
       <Suspense>
         <Routes>
           <Route path="/*" element={<LandingPageLayout />} />
-          <Route path="/detailkonselor/*" element={<DetailKonselor />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/admin/*" element={<AdminPageLayout />} />
-          <Route path="/konselorDashboard/*" element={<KonselorPageLayout />} />
-          <Route path="/konselor/*" element={<KonselorPage />} />
-          <Route path="/booking/*" element={<JadwalPage />} />
-          <Route path="/payment/*" element={<Payment />} />
+          <Route path="detailkonselor/*" element={<DetailKonselor />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="login/*" element={<LoginPage />} />
+          <Route path="register/*" element={<RegisterPage />} />
+          <Route path="admin/*" element={<AdminPageLayout />} />
+          <Route path="konselorDashboard/*" element={<KonselorPageLayout />} />
+          <Route path="konselor/*" element={<KonselorPage />} />
+          <Route path="booking/*" element={<JadwalPage />} />
+          <Route path="payment/*" element={<Payment />} />
         </Routes>
       </Suspense>
     </div>

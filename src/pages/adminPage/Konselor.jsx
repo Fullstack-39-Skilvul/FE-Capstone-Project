@@ -41,19 +41,8 @@ function Konselor() {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userData = {
-        token: localStorage.getItem("token"),
-        userId: localStorage.getItem("userId"),
-      };
-      if (userData.token && userData.userId) {
-        dispatch(loginSuccess(userData));
-      }
-      dispatch(getDataKonselor());
-      dispatch(getDataSpesialisasi());
-    };
-
-    fetchData();
+    dispatch(getDataKonselor());
+    dispatch(getDataSpesialisasi());
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -222,11 +211,11 @@ function Konselor() {
                         ? item.spesialisasi[0].namaSpesialisasi
                         : "Belum ditentukan"}
                     </td>
-                    <td className="px-6 py-4 gap-2 flex items-center">
+                    <td className="px-6 py-4">
                       <a
                         onClick={() => handleEdit(item._id)}
                         href="#"
-                        className="font-medium bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
+                        className="font-medium mr-2 bg-yellow-200 text-blue-950 py-1 px-2 rounded-lg"
                       >
                         Update
                       </a>
@@ -350,10 +339,14 @@ function Konselor() {
         {/* akhir modal */}
 
         {/* Modal Delete */}
-        <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
-          <Modal.Header>Hapus Data Pasien</Modal.Header>
+        <Modal
+          size={"xl"}
+          show={openModalDelete}
+          onClose={() => setOpenModalDelete(false)}
+        >
+          <Modal.Header>Hapus Data Konselor</Modal.Header>
           <Modal.Body>
-            <p>Apakah Anda yakin ingin menghapus data pasien ini?</p>
+            <p>Apakah Anda yakin ingin menghapus data konselor ini?</p>
           </Modal.Body>
           <Modal.Footer>
             <Button

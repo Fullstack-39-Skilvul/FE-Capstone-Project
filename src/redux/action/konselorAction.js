@@ -43,30 +43,25 @@ const deleteKonselorFailure = (error) => ({
   payload: error,
 });
 
-const config = () => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    console.error("Token is missing in localStorage");
-    return {};
-  }
-
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-};
-
-const axiosConfig = config();
-
 export const getDataKonselor = () => {
   return async (dispatch) => {
     dispatch(fetchKonselorRequest());
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token is missing in localStorage");
+      dispatch(fetchKonselorFailure("Token is missing"));
+      return;
+    }
+
     try {
       const response = await axios.get(
         "https://be-capstone-project.vercel.app/konselors",
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(fetchKonselorSuccess(response.data));
     } catch (error) {
@@ -80,9 +75,21 @@ export const getDataKonselorById = () => {
     dispatch(fetchKonselorRequest());
     const id = localStorage.getItem("userId");
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchKonselorFailure("Token is missing"));
+        return;
+      }
+
       const response = await axios.get(
         `https://be-capstone-project.vercel.app/konselors/${id}`,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(fetchKonselorSuccess(response.data));
     } catch (error) {
@@ -98,9 +105,21 @@ export const getJadwalKonselor = () => {
     const id = localStorage.getItem("userId");
 
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchKonselorFailure("Token is missing"));
+        return;
+      }
+
       const response = await axios.get(
         `https://be-capstone-project.vercel.app/konselors/${id}/jadwal`,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(fetchKonselorSuccess(response.data));
     } catch (error) {
@@ -113,10 +132,22 @@ export const updateDataKonselor = (_id, newValues) => {
   return async (dispatch) => {
     dispatch(updateKonselorRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchKonselorFailure("Token is missing"));
+        return;
+      }
+
       const response = await axios.put(
         `https://be-capstone-project.vercel.app/konselors/${_id}`,
         newValues,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(updateKonselorSuccess(response.data));
       toast.success("Data berhasil diperbarui !");
@@ -132,9 +163,21 @@ export const deleteDataKonselor = (id) => {
   return async (dispatch) => {
     dispatch(deleteKonselorRequest());
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchKonselorFailure("Token is missing"));
+        return;
+      }
+
       await axios.delete(
         `https://be-capstone-project.vercel.app/konselors/${id}`,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(deleteKonselorSuccess(id));
       toast.success("Data berhasil dihapus !");
@@ -148,10 +191,22 @@ export const deleteDataKonselor = (id) => {
 export const createDataKonselor = (newKonselor) => {
   return async (dispatch) => {
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        dispatch(fetchKonselorFailure("Token is missing"));
+        return;
+      }
+
       await axios.post(
         "https://be-capstone-project.vercel.app/konselors",
         newKonselor,
-        axiosConfig
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(getDataKonselor());
       toast.success("Data berhasil ditambahkan !");

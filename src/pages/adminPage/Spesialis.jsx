@@ -28,18 +28,7 @@ function Spesialis() {
   const { isLoading, spesialisasis } = useSelector((state) => state.spesialis);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userData = {
-        token: localStorage.getItem("token"),
-        userId: localStorage.getItem("userId"),
-      };
-      if (userData.token && userData.userId) {
-        dispatch(loginSuccess(userData));
-      }
-      dispatch(getDataSpesialisasi());
-    };
-
-    fetchData();
+    dispatch(getDataSpesialisasi());
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -254,10 +243,14 @@ function Spesialis() {
         </Modal>
         {/* akhir modal */}
 
-        <Modal show={openModalDelete} onClose={() => setOpenModalDelete(false)}>
-          <Modal.Header>Hapus Data Pasien</Modal.Header>
+        <Modal
+          size={"xl"}
+          show={openModalDelete}
+          onClose={() => setOpenModalDelete(false)}
+        >
+          <Modal.Header>Hapus Data Spesialis</Modal.Header>
           <Modal.Body>
-            <p>Apakah Anda yakin ingin menghapus data pasien ini?</p>
+            <p>Apakah Anda yakin ingin menghapus data Spesialis ini?</p>
           </Modal.Body>
           <Modal.Footer>
             <Button

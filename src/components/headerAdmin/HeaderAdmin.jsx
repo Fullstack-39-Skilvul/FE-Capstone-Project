@@ -1,8 +1,19 @@
 import React from "react";
 import { IMAGES } from "../../assets/constant";
 import { Bell, Smiley, User } from "phosphor-react";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/action/loginAction";
+import { NavLink } from "react-router-dom";
 
 function HeaderAdmin() {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    dispatch(logout());
+  };
+
   return (
     <div className="flex fixed z-50 top-0 justify-between px-10 py-2 items-center shadow w-full bg-white">
       <div>
@@ -24,7 +35,14 @@ function HeaderAdmin() {
           </div>
           <div className="text-sm flex-col flex items-end">
             <div className="font-semibold">Admin</div>
-            <div className="text-xs">Logout</div>
+            <NavLink to="/login">
+              <div
+                className="text-xs hover:text-sky-500 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </div>
+            </NavLink>
           </div>
         </div>
       </div>
